@@ -101,9 +101,9 @@ export default function BookingConfirmation() {
     const icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//The Consultant//Booking Confirmation//EN',
+      'PRODID:-//Consultant Space//Booking Confirmation//EN',
       'BEGIN:VEVENT',
-      `UID:${booking.bookingId}@theconsultant.com`,
+      `UID:${booking.bookingId}@consultantspace.com`,
       `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
       `DTSTART:${event.startTime.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
       `DTEND:${event.endTime.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,

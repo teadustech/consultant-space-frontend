@@ -13,7 +13,7 @@ export default function Signup() {
           <CardHeader className="space-y-1">
             <CardTitle className="text-3xl text-center">Choose Your Role</CardTitle>
             <CardDescription className="text-center">
-              Select how you'd like to use The Consultant platform
+              Select how you'd like to use Consultant Space
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

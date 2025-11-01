@@ -74,14 +74,14 @@ export default function AboutUs() {
       <section className="bg-gradient-to-br from-brand-teal/10 to-brand-red/10 py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-4 text-lg font-semibold">
-            About The Consultant
+            About Consultant Space
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             Connecting You with{" "}
             <span className="text-brand-teal">Expert Knowledge</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            The Consultant is India's premier platform connecting seekers with verified experts 
+            Consultant Space is India's premier platform connecting seekers with verified experts 
             across diverse domains. We believe everyone deserves access to expert guidance.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
@@ -105,7 +105,7 @@ export default function AboutUs() {
             Legal Information
           </h3>
           <p className="text-muted-foreground">
-            The Consultant is operated by <strong>Teadustech Pvt Ltd</strong>, 
+            Consultant Space is operated by <strong>Teadustech Pvt Ltd</strong>, 
             a registered company in India.
           </p>
         </div>
@@ -145,7 +145,7 @@ export default function AboutUs() {
             </div>
             <div className="bg-gradient-to-br from-brand-teal/20 to-brand-red/20 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-foreground mb-4">
-                Why Choose The Consultant?
+                Why Choose Consultant Space?
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
@@ -220,7 +220,7 @@ export default function AboutUs() {
               Meet Our Team
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The passionate individuals behind The Consultant platform, 
+              The passionate individuals behind Consultant Space, 
               dedicated to connecting you with expert knowledge.
             </p>
           </div>
@@ -255,7 +255,7 @@ export default function AboutUs() {
           </h2>
           <p className="text-xl mb-8 opacity-90">
             Join thousands of seekers who have found the guidance they need 
-            through The Consultant platform.
+            through Consultant Space.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

@@ -28,7 +28,7 @@ export default function Testimonials() {
       category: "seeker",
       domain: "Business Strategy",
       date: "December 2024",
-      content: "The Consultant platform helped me find an amazing business strategist who guided me through scaling my startup. The session was incredibly valuable and helped me avoid costly mistakes. Highly recommended!",
+      content: "Consultant Space helped me find an amazing business strategist who guided me through scaling my startup. The session was incredibly valuable and helped me avoid costly mistakes. Highly recommended!",
       consultant: "Dr. Priya Patel",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
     },
@@ -100,7 +100,7 @@ export default function Testimonials() {
       category: "consultant",
       domain: "Human Resources",
       date: "October 2024",
-      content: "I love helping organizations build better workplaces. The Consultant platform has connected me with companies that are genuinely committed to improving their HR practices.",
+      content: "I love helping organizations build better workplaces. Consultant Space has connected me with companies that are genuinely committed to improving their HR practices.",
       earnings: "₹1,20,000+",
       sessions: "28+",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
@@ -179,7 +179,7 @@ export default function Testimonials() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Real stories from seekers who found expert guidance and consultants 
-            who built successful practices on The Consultant platform.
+            who built successful practices on Consultant Space.
           </p>
           
           {/* Stats */}
@@ -309,7 +309,7 @@ export default function Testimonials() {
           </h2>
           <p className="text-xl mb-8 opacity-90">
             Whether you're seeking expert guidance or want to share your expertise, 
-            The Consultant platform is here to help you succeed.
+            Consultant Space is here to help you succeed.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

@@ -103,7 +103,7 @@ export default function AdminSidebar({ adminData, onLogout, className }) {
               <Shield className="h-8 w-8 text-brand-teal" />
               <div>
                 <h1 className="text-lg font-bold">Admin Panel</h1>
-                <p className="text-xs text-muted-foreground">The Consultant</p>
+                <p className="text-xs text-muted-foreground">Consultant Space</p>
               </div>
             </div>
           </div>
