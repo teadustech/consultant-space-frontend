@@ -56,7 +56,7 @@ export default function Header() {
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="The Consultant Logo" className="h-16 w-24 md:h-20 md:w-30 object-contain" />
           <div className="block">
-            <div className="font-bold text-base md:text-lg"><span className="text-brand-teal">The</span> Consultant</div>
+            <div className="font-bold text-base md:text-lg"><span className="text-brand-teal">Consultant </span> Space</div>
             <div className="text-xs text-muted-foreground font-medium"><b><span className="text-brand-teal">Your Go-</span>To Experts</b></div>
           </div>
         </Link>
