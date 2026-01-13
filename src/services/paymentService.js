@@ -173,7 +173,7 @@ class PaymentService {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: order.currency,
-      name: 'The Consultant',
+      name: 'Consultant Space',
       description: `Booking ${order.receipt}`,
       order_id: order.orderId,
       prefill: {

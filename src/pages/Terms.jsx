@@ -18,12 +18,12 @@ export default function Terms() {
   const sections = [
     {
       title: "1. Acceptance of Terms",
-      content: `By accessing and using The Consultant platform ("Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.`,
+      content: `By accessing and using Consultant Space platform ("Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.`,
       icon: FiCheckCircle,
     },
     {
       title: "2. Description of Service",
-      content: `The Consultant is a platform that connects seekers with verified consultants across various domains including but not limited to business strategy, software development, digital marketing, human resources, finance, and legal services.`,
+      content: `Consultant Space is a platform that connects seekers with verified consultants across various domains including but not limited to business strategy, software development, digital marketing, human resources, finance, and legal services.`,
       icon: FiUsers,
     },
     {
@@ -48,7 +48,7 @@ export default function Terms() {
     },
     {
       title: "7. Intellectual Property Rights",
-      content: `The Service and its original content, features, and functionality are and will remain the exclusive property of Teadustech Pvt Ltd (operating as The Consultant) and its licensors. The Service is protected by copyright, trademark, and other laws.`,
+      content: `The Service and its original content, features, and functionality are and will remain the exclusive property of Teadustech Pvt Ltd (operating as Consultant Space) and its licensors. The Service is protected by copyright, trademark, and other laws.`,
       icon: FiFileText,
     },
     {
@@ -58,17 +58,17 @@ export default function Terms() {
     },
     {
       title: "9. Disclaimers",
-      content: `The information on this Service is provided on an "as is" basis. The Consultant does not warrant that the Service will be uninterrupted or error-free, nor does it make any warranty as to the results that may be obtained from use of the Service.`,
+      content: `The information on this Service is provided on an "as is" basis. Consultant Space does not warrant that the Service will be uninterrupted or error-free, nor does it make any warranty as to the results that may be obtained from use of the Service.`,
       icon: FiAlertTriangle,
     },
     {
       title: "10. Limitation of Liability",
-      content: `In no event shall The Consultant, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.`,
+      content: `In no event shall Consultant Space, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.`,
       icon: FiAlertTriangle,
     },
     {
       title: "11. Indemnification",
-      content: `You agree to defend, indemnify, and hold harmless The Consultant and its licensees and service providers from any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees arising out of or relating to your violation of these Terms.`,
+      content: `You agree to defend, indemnify, and hold harmless Consultant Space and its licensees and service providers from any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees arising out of or relating to your violation of these Terms.`,
       icon: FiShield,
     },
     {
@@ -88,7 +88,7 @@ export default function Terms() {
     },
     {
       title: "15. Contact Information",
-      content: `If you have any questions about these Terms, please contact us at legal@theconsultant.com or call us at +91 98765 43210. Teadustech Pvt Ltd is the legal entity operating The Consultant platform.`,
+      content: `If you have any questions about these Terms, please contact us at legal@theconsultant.com or call us at +91 98765 43210. Teadustech Pvt Ltd is the legal entity operating Consultant Space platform.`,
       icon: FiUsers,
     },
   ];
@@ -116,7 +116,7 @@ export default function Terms() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Please read these terms and conditions carefully before using 
-            The Consultant platform.
+            Consultant Space platform.
           </p>
           <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
             <FiFileText className="h-4 w-4" />
@@ -137,7 +137,7 @@ export default function Terms() {
                     Important Notice
                   </h3>
                   <p className="text-muted-foreground">
-                    By using The Consultant platform, you acknowledge that you have read, 
+                    By using Consultant Space platform, you acknowledge that you have read, 
                     understood, and agree to be bound by these Terms of Service. If you do 
                     not agree to these terms, please do not use our platform.
                   </p>
@@ -185,7 +185,7 @@ export default function Terms() {
               Key Points to Remember
             </h2>
             <p className="text-lg text-muted-foreground">
-              Important information about using The Consultant platform
+              Important information about using Consultant Space platform
             </p>
           </div>
           
@@ -236,7 +236,7 @@ export default function Terms() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <p className="text-sm text-muted-foreground">
             These Terms of Service constitute the entire agreement between you and Teadustech Pvt Ltd 
-            (operating as The Consultant) regarding the use of our platform. Any changes to these terms will be posted on this page.
+            (operating as Consultant Space) regarding the use of our platform. Any changes to these terms will be posted on this page.
           </p>
         </div>
       </section>

@@ -65,7 +65,7 @@ export default function Contact() {
     {
       title: "Company",
       value: "Teadustech Pvt Ltd",
-      description: "Legal entity operating The Consultant",
+      description: "Legal entity operating Consultant Space",
       icon: FiBriefcase,
       color: "text-brand-teal",
       bgColor: "bg-brand-teal/10",
@@ -353,12 +353,12 @@ export default function Contact() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="text-xl font-bold text-foreground mb-4">
-                    The Consultant Headquarters
+                    Consultant Space Headquarters
                   </h3>
                   <div className="space-y-4 text-muted-foreground">
                     <p>
                       <strong className="text-foreground">Address:</strong><br />
-                      The Consultant Tower<br />
+                      Consultant Space Tower<br />
                       Bandra Kurla Complex<br />
                       Mumbai, Maharashtra 400051<br />
                       India

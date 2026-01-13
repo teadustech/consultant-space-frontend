@@ -11,11 +11,11 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hi! I'm your AI assistant. I can help you learn about The Consultant platform, our services, how to sign up, and answer any questions you might have. What would you like to know?",
+      text: "Hi! I'm your AI assistant. I can help you learn about Consultant Space, our services, how to sign up, and answer any questions you might have. What would you like to know?",
       sender: 'bot',
       timestamp: new Date(),
       quickActions: [
-        { text: "What is The Consultant?", action: "what is the consultant" },
+        { text: "What is Consultant Space?", action: "what is the consultant" },
         { text: "How does it work?", action: "how does it work" },
         { text: "Sign up as Seeker", action: "sign up seeker" },
         { text: "Sign up as Consultant", action: "sign up consultant" }
@@ -46,7 +46,7 @@ const Chatbot = () => {
   // Knowledge base for the chatbot
   const knowledgeBase = {
     'what is the consultant': {
-      response: "The Consultant is a platform that connects seekers with expert professionals across various domains including Software Development, Finance, Law, Marketing, and more. We bridge the gap between people who need expert advice and qualified consultants who can provide it.",
+      response: "Consultant Space is a platform that connects seekers with expert professionals across various domains including Software Development, Finance, Law, Marketing, and more. We bridge the gap between people who need expert advice and qualified consultants who can provide it.",
       keywords: ['what is', 'platform', 'connect', 'experts', 'consultants'],
       quickActions: [
         { text: "How does it work?", action: "how does it work" },
@@ -55,7 +55,7 @@ const Chatbot = () => {
       ]
     },
     'how does it work': {
-      response: "Here's how The Consultant works:\n\n1. **For Seekers**: Sign up, browse consultants by domain, view their profiles and expertise, and connect with them for consultations.\n\n2. **For Consultants**: Create a profile showcasing your expertise, set your rates, and get matched with seekers who need your services.\n\n3. **The Process**: Browse → Connect → Consult → Get Results",
+      response: "Here's how Consultant Space works:\n\n1. **For Seekers**: Sign up, browse consultants by domain, view their profiles and expertise, and connect with them for consultations.\n\n2. **For Consultants**: Create a profile showcasing your expertise, set your rates, and get matched with seekers who need your services.\n\n3. **The Process**: Browse → Connect → Consult → Get Results",
       keywords: ['how', 'work', 'process', 'steps', 'procedure'],
       quickActions: [
         { text: "Sign up as Seeker", action: "sign up seeker" },
@@ -127,7 +127,7 @@ const Chatbot = () => {
       ]
     },
     'features': {
-      response: "Key features of The Consultant platform:\n\n• **Expert Matching**: Find consultants based on your specific needs\n• **Secure Communication**: Safe and private consultation channels\n• **Profile Verification**: All consultants are verified professionals\n• **Flexible Scheduling**: Book consultations at your convenience\n• **Payment Protection**: Secure payment processing\n• **Reviews & Ratings**: Make informed decisions based on feedback",
+      response: "Key features of Consultant Space:\n\n• **Expert Matching**: Find consultants based on your specific needs\n• **Secure Communication**: Safe and private consultation channels\n• **Profile Verification**: All consultants are verified professionals\n• **Flexible Scheduling**: Book consultations at your convenience\n• **Payment Protection**: Secure payment processing\n• **Reviews & Ratings**: Make informed decisions based on feedback",
       keywords: ['features', 'benefits', 'what can', 'capabilities', 'offerings'],
       quickActions: [
         { text: "How does it work?", action: "how does it work" },

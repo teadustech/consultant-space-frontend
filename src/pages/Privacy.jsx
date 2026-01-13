@@ -21,7 +21,7 @@ export default function Privacy() {
   const sections = [
     {
       title: "1. Information We Collect",
-      content: `Teadustech Pvt Ltd (operating as The Consultant) collects information you provide directly to us, such as when you create an account, book a consultation, or contact us. This includes your name, email address, phone number, payment information, and any other information you choose to provide.`,
+      content: `Teadustech Pvt Ltd (operating as Consultant Space) collects information you provide directly to us, such as when you create an account, book a consultation, or contact us. This includes your name, email address, phone number, payment information, and any other information you choose to provide.`,
       icon: FiUser,
     },
     {
@@ -137,7 +137,7 @@ export default function Privacy() {
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             We are committed to protecting your privacy and ensuring the security 
-            of your personal information on The Consultant platform.
+            of your personal information on Consultant Space platform.
           </p>
           <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
             <FiFileText className="h-4 w-4" />
@@ -158,7 +158,7 @@ export default function Privacy() {
                     Our Commitment to Privacy
                   </h3>
                   <p className="text-muted-foreground">
-                    At The Consultant, we believe your privacy is fundamental. This policy explains how we collect, 
+                    At Consultant Space, we believe your privacy is fundamental. This policy explains how we collect, 
                     use, and protect your personal information. We are committed to transparency and giving you 
                     control over your data.
                   </p>

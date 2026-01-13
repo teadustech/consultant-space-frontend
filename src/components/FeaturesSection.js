@@ -28,7 +28,7 @@ export default function FeaturesSection() {
   return (
     <section className="py-16 bg-gradient-to-r from-brand-teal/5 to-brand-teal/10" id="features">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-10 text-foreground">Why Choose The Consultant?</h2>
+        <h2 className="text-3xl font-bold text-center mb-10 text-foreground">Why Choose Consultant Space?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {features.map((feature, idx) => (
             <div key={idx} className="bg-card rounded-xl p-6 flex flex-col items-center shadow-lg hover:shadow-xl transition-all border border-brand-teal/10">

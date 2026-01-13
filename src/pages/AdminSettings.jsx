@@ -181,7 +181,7 @@ export default function AdminSettings() {
                   <Input
                     value={settings?.platform?.name || ''}
                     onChange={(e) => handleSettingChange('platform', 'name', e.target.value)}
-                    placeholder="The Consultant"
+                    placeholder="Consultant Space"
                   />
                 </div>
                 <div className="space-y-2">
