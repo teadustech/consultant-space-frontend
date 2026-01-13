@@ -9,18 +9,11 @@ Frontend code of the consultant-space website is stored here. This respository c
 - Database: MongoDB
 
 ## Getting Started
-1. Rename `.env.example` to `.env` and update MongoDB URI
-2. Run backend:
-   ```bash
-   cd server
-   npm install
-   npm start
-   ```
-3. Run frontend:
+1. Run frontend:
    ```bash
    cd client
    npm install
    npm start
    ```
 
-Visit: http://localhost:3000 and backend API on http://localhost:5000
+Visit: http://localhost:3000  
