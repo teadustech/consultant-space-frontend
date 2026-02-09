@@ -46,26 +46,8 @@ export default function AboutUs() {
     },
   ];
 
-  const team = [
-    {
-      name: "Sarah Johnson",
-      role: "CEO & Founder",
-      bio: "Former consultant with 15+ years of experience in business strategy and digital transformation.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      name: "Michael Chen",
-      role: "CTO",
-      bio: "Technology leader with expertise in building scalable platforms and AI-driven solutions.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      name: "Priya Sharma",
-      role: "Head of Operations",
-      bio: "Operations expert focused on creating seamless user experiences and platform optimization.",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
-    },
-  ];
+  // Add team members here when ready. Each item: name, role, bio, image.
+  const team = [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -212,40 +194,42 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Meet Our Team
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              The passionate individuals behind Consultant Space, 
-              dedicated to connecting you with expert knowledge.
-            </p>
+      {/* Meet Our Team - hidden for now; add entries to team array and uncomment to show */}
+      {team.length > 0 && (
+        <section className="py-20">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Meet Our Team
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                The passionate individuals behind Consultant Space, 
+                dedicated to connecting you with expert knowledge.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {team.map((member, index) => (
+                <Card key={index} className="text-center border-0 shadow-lg">
+                  <CardHeader>
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                    />
+                    <CardTitle className="text-xl">{member.name}</CardTitle>
+                    <Badge variant="secondary" className="w-fit mx-auto">
+                      {member.role}
+                    </Badge>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{member.bio}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {team.map((member, index) => (
-              <Card key={index} className="text-center border-0 shadow-lg">
-                <CardHeader>
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                  />
-                  <CardTitle className="text-xl">{member.name}</CardTitle>
-                  <Badge variant="secondary" className="w-fit mx-auto">
-                    {member.role}
-                  </Badge>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{member.bio}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-brand-teal to-brand-red">
