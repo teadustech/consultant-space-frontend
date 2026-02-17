@@ -17,124 +17,8 @@ import {
 export default function Testimonials() {
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Rahul Sharma",
-      role: "Startup Founder",
-      company: "TechStart India",
-      location: "Mumbai, India",
-      rating: 5,
-      category: "seeker",
-      domain: "Business Strategy",
-      date: "December 2024",
-      content: "Consultant Space helped me find an amazing business strategist who guided me through scaling my startup. The session was incredibly valuable and helped me avoid costly mistakes. Highly recommended!",
-      consultant: "Dr. Priya Patel",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 2,
-      name: "Dr. Priya Patel",
-      role: "Business Consultant",
-      company: "Strategic Solutions",
-      location: "Delhi, India",
-      rating: 5,
-      category: "consultant",
-      domain: "Business Strategy",
-      date: "December 2024",
-      content: "Being a consultant on this platform has been incredibly rewarding. I've helped numerous entrepreneurs and businesses achieve their goals. The platform is professional and the clients are motivated to learn.",
-      earnings: "₹2,50,000+",
-      sessions: "45+",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 3,
-      name: "Anjali Desai",
-      role: "Marketing Manager",
-      company: "Digital Marketing Pro",
-      location: "Bangalore, India",
-      rating: 5,
-      category: "seeker",
-      domain: "Digital Marketing",
-      date: "November 2024",
-      content: "I was struggling with our digital marketing strategy. Found an expert consultant who not only provided great insights but also helped me implement actionable strategies. Our ROI improved by 300%!",
-      consultant: "Vikram Singh",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 4,
-      name: "Vikram Singh",
-      role: "Digital Marketing Expert",
-      company: "Growth Hackers",
-      location: "Pune, India",
-      rating: 5,
-      category: "consultant",
-      domain: "Digital Marketing",
-      date: "November 2024",
-      content: "The platform has given me the opportunity to share my expertise with businesses that truly need it. The booking system is seamless and the clients are always well-prepared for our sessions.",
-      earnings: "₹1,80,000+",
-      sessions: "32+",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 5,
-      name: "Meera Iyer",
-      role: "HR Director",
-      company: "Global Tech Corp",
-      location: "Chennai, India",
-      rating: 5,
-      category: "seeker",
-      domain: "Human Resources",
-      date: "October 2024",
-      content: "We were facing challenges with employee retention and culture building. Our HR consultant provided practical solutions that we could implement immediately. The results were visible within weeks.",
-      consultant: "Rajesh Kumar",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 6,
-      name: "Rajesh Kumar",
-      role: "HR Consultant",
-      company: "People First Consulting",
-      location: "Hyderabad, India",
-      rating: 5,
-      category: "consultant",
-      domain: "Human Resources",
-      date: "October 2024",
-      content: "I love helping organizations build better workplaces. Consultant Space has connected me with companies that are genuinely committed to improving their HR practices.",
-      earnings: "₹1,20,000+",
-      sessions: "28+",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 7,
-      name: "Arjun Reddy",
-      role: "Software Engineer",
-      company: "Tech Innovations",
-      location: "Kolkata, India",
-      rating: 5,
-      category: "seeker",
-      domain: "Software Development",
-      date: "September 2024",
-      content: "I was looking to transition into a new technology stack. My consultant not only taught me the technical aspects but also helped me understand the industry trends and career opportunities.",
-      consultant: "Sneha Gupta",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
-    },
-    {
-      id: 8,
-      name: "Sneha Gupta",
-      role: "Senior Software Architect",
-      company: "Tech Leaders",
-      location: "Gurgaon, India",
-      rating: 5,
-      category: "consultant",
-      domain: "Software Development",
-      date: "September 2024",
-      content: "Mentoring developers and helping them grow in their careers is incredibly fulfilling. The platform makes it easy to connect with motivated learners who are eager to improve their skills.",
-      earnings: "₹3,00,000+",
-      sessions: "52+",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
-    }
-  ];
+  // Add real testimonials here when available. Each item: id, name, role, company, location, rating, category ("seeker"|"consultant"), domain, date, content, image; seekers need "consultant", consultants need "earnings", "sessions".
+  const testimonials = [];
 
   const stats = [
     { label: "Total Reviews", value: "1,247", icon: FiStar },
@@ -211,10 +95,15 @@ export default function Testimonials() {
         </div>
       </section>
 
-      {/* Testimonials Grid */}
+      {/* Testimonials Grid - add items to testimonials array to display */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
+            {filteredTestimonials.length === 0 ? (
+              <p className="col-span-2 text-center text-muted-foreground py-12">
+                Real testimonials will appear here. Add entries to the testimonials array when available.
+              </p>
+            ) : null}
             {filteredTestimonials.map((testimonial) => (
               <Card key={testimonial.id} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader>

@@ -202,15 +202,6 @@ export default function Login() {
                 Sign up here
               </Link>
             </div>
-
-            {/* Demo credentials info */}
-            <div className="p-4 bg-brand-teal/5 rounded-lg border border-brand-teal/20">
-              <h4 className="text-sm font-medium text-brand-teal mb-2">Demo Credentials:</h4>
-              <div className="text-xs text-brand-teal/80 space-y-1">
-                <p><strong>Seeker:</strong> seeker@demo.com / password123</p>
-                <p><strong>Consultant:</strong> consultant@demo.com / password123</p>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>
