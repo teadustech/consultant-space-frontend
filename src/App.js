@@ -36,7 +36,6 @@ import ServiceBookings from "./pages/ServiceBookings";
 import SeekerServiceBookings from "./pages/SeekerServiceBookings";
 import ConsultantDirectory from "./pages/ConsultantDirectory";
 import NotFound from "./pages/NotFound";
-import TestRoute from "./pages/TestRoute";
 
 export const routes = [
   {
@@ -202,11 +201,6 @@ export const routes = [
   {
     path: "/seeker-service-bookings",
     element: <SeekerServiceBookings />,
-  },
-  // Test route for debugging
-  {
-    path: "/test/:username",
-    element: <TestRoute />,
   },
   // 404 route - catch all unmatched routes
   {
