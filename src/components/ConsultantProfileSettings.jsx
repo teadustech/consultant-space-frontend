@@ -15,12 +15,9 @@ import {
   FiGlobe,
   FiDollarSign,
   FiClock,
-  FiInfo,
   FiCamera,
   FiUser
 } from "react-icons/fi";
-import { debugLocalStorage } from "../utils/debugLocalStorage";
-
 export default function ConsultantProfileSettings() {
   const [profileEnabled, setProfileEnabled] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -716,16 +713,6 @@ export default function ConsultantProfileSettings() {
 
           {/* Save Button */}
           <div className="flex justify-end gap-4">
-            <Button 
-              variant="outline"
-              onClick={debugLocalStorage}
-              size="lg"
-              className="flex items-center gap-2"
-            >
-              <FiInfo className="h-4 w-4" />
-              Debug localStorage
-            </Button>
-            
             <Button onClick={handleSaveProfile} size="lg" disabled={saving}>
               {saving ? (
                 <>
