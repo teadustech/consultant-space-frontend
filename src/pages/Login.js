@@ -10,6 +10,7 @@ import { Label } from "../components/ui/label";
 import { User, UserCheck, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { cn } from "../lib/utils";
 import axios from "axios";
+import { apiUrl } from "../config/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function Login() {
     }
     setLoading(true);
     try {
-      const response = await axios.post("/api/login", { 
+      const response = await axios.post(apiUrl("/api/login"), { 
         email: form.email, 
         password: form.password,
         userType: form.role

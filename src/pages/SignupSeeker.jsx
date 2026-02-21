@@ -5,6 +5,7 @@ import Chatbot from "../components/Chatbot";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { publicConsultantService } from "../services/publicConsultantService";
+import { apiUrl } from "../config/api";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
@@ -58,7 +59,7 @@ export default function SignupSeeker() {
     }
     setLoading(true);
     try {
-      await axios.post("/api/seeker/register", form);
+      await axios.post(apiUrl("/api/seeker/register"), form);
       setSuccess("Registration successful! You can now log in.");
       setForm({ fullName: "", email: "", phone: "", password: "" });
       

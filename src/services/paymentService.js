@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { apiUrl } from '../config/api';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
 
-// Configure axios with auth token
+// Configure axios with auth token (baseURL only when set, so relative /api works locally with proxy)
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  ...(API_BASE_URL && { baseURL: API_BASE_URL }),
   headers: {
     'Content-Type': 'application/json',
   },
@@ -27,7 +28,7 @@ class PaymentService {
    */
   async createPaymentOrder(bookingId) {
     try {
-      const response = await fetch('/api/payments/create-order', {
+      const response = await fetch(apiUrl('/api/payments/create-order'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ class PaymentService {
    */
   async verifyPayment(orderId, paymentId, signature) {
     try {
-      const response = await fetch('/api/payments/verify', {
+      const response = await fetch(apiUrl('/api/payments/verify'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ class PaymentService {
    */
   async getPaymentMethods() {
     try {
-      const response = await fetch('/api/payments/methods', {
+      const response = await fetch(apiUrl('/api/payments/methods'), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +112,7 @@ class PaymentService {
    */
   async getPaymentBreakdown(bookingId) {
     try {
-      const response = await fetch(`/api/payments/breakdown/${bookingId}`, {
+      const response = await fetch(apiUrl(`/api/payments/breakdown/${bookingId}`), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ class PaymentService {
    */
   async processRefund(paymentId, amount, reason) {
     try {
-      const response = await fetch('/api/payments/refund', {
+      const response = await fetch(apiUrl('/api/payments/refund'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,4 +1,6 @@
 // Public consultant search service (no authentication required)
+import { apiUrl } from '../config/api';
+
 export const publicConsultantService = {
   // Search consultants publicly
   searchConsultants: async (filters = {}) => {
@@ -12,7 +14,7 @@ export const publicConsultantService = {
         }
       });
       
-      const response = await fetch(`/api/consultants/public/search?${params}`, {
+      const response = await fetch(apiUrl(`/api/consultants/public/search?${params}`), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -34,7 +36,7 @@ export const publicConsultantService = {
   // Get public consultant profile
   getPublicProfile: async (consultantId) => {
     try {
-      const response = await fetch(`/api/consultants/${consultantId}/public-profile`, {
+      const response = await fetch(apiUrl(`/api/consultants/${consultantId}/public-profile`), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +58,7 @@ export const publicConsultantService = {
   // Get available domains
   getDomains: async () => {
     try {
-      const response = await fetch('/api/consultants/domains', {
+      const response = await fetch(apiUrl('/api/consultants/domains'), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

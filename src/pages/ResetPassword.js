@@ -10,6 +10,7 @@ import { Label } from "../components/ui/label";
 import { Eye, EyeOff, CheckCircle, AlertCircle, ArrowLeft, Lock } from "lucide-react";
 import { cn } from "../lib/utils";
 import axios from "axios";
+import { apiUrl } from "../config/api";
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -44,7 +45,7 @@ export default function ResetPassword() {
       }
 
       try {
-        await axios.post("/api/verify-reset-token", { token, userType });
+        await axios.post(apiUrl("/api/verify-reset-token"), { token, userType });
         setTokenValid(true);
       } catch (err) {
         setErrors({ api: err.response?.data?.message || "Invalid or expired reset link. Please request a new password reset." });
@@ -85,7 +86,7 @@ export default function ResetPassword() {
     }
     setLoading(true);
     try {
-      const response = await axios.post("/api/reset-password", { 
+      const response = await axios.post(apiUrl("/api/reset-password"), { 
         token,
         userType,
         newPassword: form.newPassword

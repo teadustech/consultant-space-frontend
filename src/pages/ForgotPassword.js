@@ -7,6 +7,7 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { User, UserCheck, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 import axios from "axios";
+import { apiUrl } from "../config/api";
 
 export default function ForgotPassword() {
   // Form state
@@ -45,7 +46,7 @@ export default function ForgotPassword() {
     }
     setLoading(true);
     try {
-      const response = await axios.post("/api/forgot-password", { 
+      const response = await axios.post(apiUrl("/api/forgot-password"), { 
         email: form.email, 
         userType: form.userType
       });
