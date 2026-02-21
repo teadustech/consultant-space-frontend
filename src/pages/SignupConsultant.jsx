@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Chatbot from "../components/Chatbot";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { apiUrl } from "../config/api";
+import { consultantRegisterUrl } from "../config/api";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Button } from "../components/ui/button";
@@ -74,7 +74,7 @@ export default function SignupConsultant() {
     }
     setLoading(true);
     try {
-      await axios.post(apiUrl("/api/consultant/register"), form);
+      await axios.post(consultantRegisterUrl(), form);
       setSuccess("Registration successful! You can now log in.");
       setForm({ fullName: "", email: "", phone: "", domain: "Software", experience: "", rate: "", password: "" });
     } catch (err) {
