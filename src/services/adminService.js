@@ -1,5 +1,6 @@
 // Admin service for API calls
-const API_BASE = '/api/admin';
+import { getApiBase } from '../config/api';
+const API_BASE = getApiBase() ? `${getApiBase().replace(/\/$/, '')}/admin` : '/api/admin';
 
 export const adminService = {
   // Authentication
