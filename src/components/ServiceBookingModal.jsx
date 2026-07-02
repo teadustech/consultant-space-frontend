@@ -355,7 +355,7 @@ export default function ServiceBookingModal({
               <div className="bg-brand-teal/5 border border-brand-teal/20 rounded-lg p-4">
                 <h4 className="font-medium text-brand-teal mb-2">Payment Method</h4>
                 <p className="text-sm text-muted-foreground">
-                  Razorpay checkout will open in test mode until live Razorpay keys are configured.
+                  Razorpay checkout will open securely to complete your payment.
                 </p>
               </div>
 
