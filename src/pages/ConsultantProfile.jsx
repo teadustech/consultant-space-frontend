@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { ArrowLeft, Star, Clock, DollarSign, User, Calendar, Briefcase } from "lucide-react";
+import { ArrowLeft, Star, Clock, DollarSign, User, Calendar, Briefcase, Award } from "lucide-react";
 import { consultantService } from "../services/consultantService";
 
 export default function ConsultantProfile() {
@@ -18,13 +18,13 @@ export default function ConsultantProfile() {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Get the token for authenticated requests
         const token = localStorage.getItem('token');
         const userType = localStorage.getItem('userType');
-        
+
         let profileData;
-        
+
         if (token && userType === 'seeker') {
           // Use authenticated endpoint for seekers
           profileData = await consultantService.getConsultantProfile(id);
@@ -32,7 +32,7 @@ export default function ConsultantProfile() {
           // Use public endpoint for non-authenticated users
           profileData = await consultantService.getPublicConsultantProfile(id);
         }
-        
+
         setConsultant(profileData);
       } catch (error) {
         console.error('Error fetching consultant profile:', error);
@@ -52,7 +52,8 @@ export default function ConsultantProfile() {
   };
 
   const handleBackToSearch = () => {
-    navigate('/search-consultants');
+    const userType = localStorage.getItem('userType');
+    navigate(userType === 'seeker' ? '/search-consultants' : '/consultants');
   };
 
   if (loading) {
@@ -111,7 +112,7 @@ export default function ConsultantProfile() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -137,7 +138,7 @@ export default function ConsultantProfile() {
                     <User className="h-12 w-12 text-primary" />
                   </div>
                 </div>
-                
+
                 {/* Basic Info */}
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -168,10 +169,10 @@ export default function ConsultantProfile() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Action Buttons */}
                     <div className="flex flex-col gap-2">
-                      <Button 
+                      <Button
                         onClick={handleBookConsultation}
                         className="bg-brand-teal hover:bg-brand-teal/90"
                       >
@@ -239,7 +240,7 @@ export default function ConsultantProfile() {
                 </Card>
               )}
 
-              
+
             </div>
 
                          {/* Sidebar */}
@@ -286,7 +287,7 @@ export default function ConsultantProfile() {
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {consultant.sessionTypes.map((type, index) => (
-                        <span 
+                        <span
                           key={index}
                           className="px-2 py-1 bg-brand-teal/10 text-brand-teal rounded-full text-xs"
                         >
@@ -307,7 +308,7 @@ export default function ConsultantProfile() {
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {consultant.meetingPlatforms.map((platform, index) => (
-                        <span 
+                        <span
                           key={index}
                           className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs"
                         >
@@ -332,7 +333,7 @@ export default function ConsultantProfile() {
                         {consultant.isAvailable ? 'Available for consultations' : 'Currently unavailable'}
                       </span>
                     </div>
-                    
+
                     {consultant.isAvailable && consultant.workingHours && (
                       <div className="mt-3">
                         <h4 className="text-sm font-medium mb-2">Working Hours:</h4>
@@ -360,4 +361,4 @@ export default function ConsultantProfile() {
       </div>
     </div>
   );
-} 
+}

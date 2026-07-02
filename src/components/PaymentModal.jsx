@@ -68,7 +68,7 @@ const PaymentModal = ({
       const orderResponse = await paymentService.createPaymentOrder(booking._id);
       
       // Get user details from localStorage
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const user = JSON.parse(localStorage.getItem('userData') || '{}');
 
       // Initialize Razorpay payment
       paymentService.initializeRazorpayPayment(
@@ -267,7 +267,7 @@ const PaymentModal = ({
                   ) : (
                     <>
                       <CreditCard className="mr-2 h-4 w-4" />
-                      Contact Support for Payment
+                      Pay Now
                     </>
                   )}
                 </Button>

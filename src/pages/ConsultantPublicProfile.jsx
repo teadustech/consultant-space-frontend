@@ -7,6 +7,7 @@ import { Separator } from "../components/ui/separator";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ServiceBookingModal from "../components/ServiceBookingModal";
+import { publicConsultantService } from "../services/publicConsultantService";
 import { 
   FiStar, 
   FiClock, 
@@ -29,33 +30,17 @@ export default function ConsultantPublicProfile() {
   const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
-    // TODO: Fetch consultant data from API based on username
-    // For now, using mock data from localStorage
-    const fetchConsultantData = () => {
+    const fetchConsultantData = async () => {
       setLoading(true);
-      
-      // Simulate API call delay
-      setTimeout(() => {
-        // Try to get from localStorage (in real app, this would be an API call)
-        const allProfiles = JSON.parse(localStorage.getItem('allConsultantProfiles') || '{}');
-        console.log('All profiles from localStorage:', allProfiles);
-        console.log('Looking for username:', username);
-        const profileData = allProfiles[username];
-        console.log('Found profile data:', profileData);
-        
-        if (profileData && profileData.profileEnabled) {
-          console.log('Profile found and enabled:', profileData);
-          setConsultant(profileData);
-        } else {
-          // If no profile found, show error message
-          console.log('Profile not found or not enabled:', profileData);
-          if (profileData) {
-            console.log('Profile exists but profileEnabled is:', profileData.profileEnabled);
-          }
-          setConsultant(null);
-        }
+      try {
+        const profileData = await publicConsultantService.getPublicProfileByUsername(username);
+        setConsultant(profileData);
+      } catch (error) {
+        console.error('Error fetching public consultant profile:', error);
+        setConsultant(null);
+      } finally {
         setLoading(false);
-      }, 1000);
+      }
     };
 
     if (username) {

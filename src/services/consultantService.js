@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+import { apiUrl } from '../config/api';
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {
@@ -16,11 +15,11 @@ export const consultantService = {
       Object.entries(filters).forEach(([key, value]) => {
         if (value) params.append(key, value);
       });
-      
-      const response = await axios.get(`${API_BASE_URL}/consultants/search?${params}`, {
+
+      const response = await axios.get(apiUrl(`/api/consultants/search?${params}`), {
         headers: getAuthHeaders()
       });
-      
+
       // Return the consultants array from the response
       return response.data.consultants || response.data;
     } catch (error) {
@@ -36,8 +35,8 @@ export const consultantService = {
       Object.entries(filters).forEach(([key, value]) => {
         if (value) params.append(key, value);
       });
-      
-      const response = await axios.get(`${API_BASE_URL}/consultants/public/search?${params}`);
+
+      const response = await axios.get(apiUrl(`/api/consultants/public/search?${params}`));
       return response.data.consultants || response.data;
     } catch (error) {
       console.error('Error searching consultants:', error);
@@ -48,7 +47,7 @@ export const consultantService = {
   // Get available domains
   getDomains: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/consultants/domains`);
+      const response = await axios.get(apiUrl('/api/consultants/domains'));
       return response.data;
     } catch (error) {
       console.error('Error fetching domains:', error);
@@ -59,7 +58,7 @@ export const consultantService = {
   // Get consultant profile (authenticated)
   getConsultantProfile: async (consultantId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/consultants/${consultantId}/profile`, {
+      const response = await axios.get(apiUrl(`/api/consultants/${consultantId}/profile`), {
         headers: getAuthHeaders()
       });
       return response.data;
@@ -72,7 +71,7 @@ export const consultantService = {
   // Get public consultant profile (no authentication)
   getPublicConsultantProfile: async (consultantId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/consultants/${consultantId}/public-profile`);
+      const response = await axios.get(apiUrl(`/api/consultants/${consultantId}/public-profile`));
       return response.data;
     } catch (error) {
       console.error('Error fetching public consultant profile:', error);
@@ -83,7 +82,7 @@ export const consultantService = {
   // Get consultant's own profile (for editing)
   getMyProfile: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/consultants/profile/me`, {
+      const response = await axios.get(apiUrl('/api/consultants/profile/me'), {
         headers: getAuthHeaders()
       });
       return response.data;
@@ -96,10 +95,14 @@ export const consultantService = {
   // Update consultant profile
   updateProfile: async (updateData) => {
     try {
-      const token = localStorage.getItem('token');
       const userData = JSON.parse(localStorage.getItem('userData'));
-      
-      const response = await axios.put(`${API_BASE_URL}/consultants/${userData.id}/profile`, updateData, {
+      const consultantId = userData?.id || userData?._id;
+
+      if (!consultantId) {
+        throw new Error('Consultant id is missing from local session');
+      }
+
+      const response = await axios.put(apiUrl(`/api/consultants/${consultantId}/profile`), updateData, {
         headers: {
           ...getAuthHeaders(),
           'Content-Type': 'application/json'
@@ -110,5 +113,28 @@ export const consultantService = {
       console.error('Error updating profile:', error);
       throw error;
     }
+  },
+
+  // Update consultant rates
+  updateRates: async (rateData) => {
+    try {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const consultantId = userData?.id || userData?._id;
+
+      if (!consultantId) {
+        throw new Error('Consultant id is missing from local session');
+      }
+
+      const response = await axios.put(apiUrl(`/api/consultants/${consultantId}/rates`), rateData, {
+        headers: {
+          ...getAuthHeaders(),
+          'Content-Type': 'application/json'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error updating rates:', error);
+      throw error;
+    }
   }
-}; 
+};

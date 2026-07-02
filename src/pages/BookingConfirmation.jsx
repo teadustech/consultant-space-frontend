@@ -175,15 +175,15 @@ export default function BookingConfirmation() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => navigate('/my-bookings')}
             className="mb-4"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to My Bookings
           </Button>
-          
+
           <div className="text-center">
             {booking.status === 'pending' ? (
               <>
@@ -194,7 +194,7 @@ export default function BookingConfirmation() {
                   Booking Submitted!
                 </h1>
                 <p className="text-muted-foreground">
-                  Your booking request has been sent to the consultant for approval
+                  Complete payment to confirm your consultation session
                 </p>
               </>
             ) : (
@@ -230,22 +230,22 @@ export default function BookingConfirmation() {
                     <label className="text-sm font-medium text-muted-foreground">Session Type</label>
                     <p className="font-medium">{getSessionTypeLabel(booking.sessionType)}</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-muted-foreground">Duration</label>
                     <p className="font-medium">{booking.sessionDuration} minutes</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-muted-foreground">Date</label>
                     <p className="font-medium">{formatDate(booking.sessionDate)}</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-muted-foreground">Time</label>
                     <p className="font-medium">{formatTime(booking.startTime, booking.endTime)}</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-muted-foreground">Platform</label>
                     <div className="flex items-center gap-2">
@@ -253,7 +253,7 @@ export default function BookingConfirmation() {
                       <span className="font-medium">{getPlatformLabel(booking.meetingPlatform)}</span>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-muted-foreground">Amount</label>
                     <p className="font-medium text-lg text-brand-teal">{formatCurrency(booking.amount)}</p>
@@ -282,9 +282,9 @@ export default function BookingConfirmation() {
                     <label className="text-sm font-medium text-muted-foreground">Meeting Link</label>
                     <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
                       <Video className="h-4 w-4 text-brand-teal" />
-                      <a 
-                        href={booking.meetingLink} 
-                        target="_blank" 
+                      <a
+                        href={booking.meetingLink}
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-brand-teal hover:underline font-medium"
                       >
@@ -310,8 +310,8 @@ export default function BookingConfirmation() {
               <CardContent>
                 <div className="flex items-start gap-4">
                   {booking.consultant.profileImage ? (
-                    <img 
-                      src={booking.consultant.profileImage} 
+                    <img
+                      src={booking.consultant.profileImage}
                       alt={booking.consultant.fullName}
                       className="w-16 h-16 rounded-full object-cover"
                     />
@@ -320,19 +320,19 @@ export default function BookingConfirmation() {
                       <User className="h-8 w-8 text-white" />
                     </div>
                   )}
-                  
+
                   <div className="flex-1 space-y-3">
                     <div>
                       <h3 className="text-lg font-semibold">{booking.consultant.fullName}</h3>
                       <p className="text-muted-foreground">{booking.consultant.email}</p>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="flex items-center gap-2">
                         <Mail className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm">{booking.consultant.email}</span>
                       </div>
-                      
+
                       {booking.consultant.phone && (
                         <div className="flex items-center gap-2">
                           <PhoneIcon className="h-4 w-4 text-muted-foreground" />
@@ -354,27 +354,27 @@ export default function BookingConfirmation() {
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button 
-                  onClick={handleDownloadCalendar} 
-                  variant="outline" 
+                <Button
+                  onClick={handleDownloadCalendar}
+                  variant="outline"
                   className="w-full"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Add to Calendar
                 </Button>
-                
-                <Button 
-                  onClick={handleShareBooking} 
-                  variant="outline" 
+
+                <Button
+                  onClick={handleShareBooking}
+                  variant="outline"
                   className="w-full"
                 >
                   <Share2 className="h-4 w-4 mr-2" />
                   Share Booking
                 </Button>
-                
-                <Button 
-                  onClick={() => navigate('/my-bookings')} 
-                  variant="outline" 
+
+                <Button
+                  onClick={() => navigate('/my-bookings')}
+                  variant="outline"
                   className="w-full"
                 >
                   <Eye className="h-4 w-4 mr-2" />
@@ -400,19 +400,19 @@ export default function BookingConfirmation() {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-brand-teal rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-white text-xs font-bold">2</span>
                   </div>
                   <div>
-                    <h4 className="font-medium">Consultant Confirmation</h4>
+                    <h4 className="font-medium">Complete Payment</h4>
                     <p className="text-sm text-muted-foreground">
-                      The consultant will review and confirm your booking
+                      Payment confirmation generates the Google Meet booking details
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-brand-teal rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-white text-xs font-bold">3</span>
@@ -420,11 +420,11 @@ export default function BookingConfirmation() {
                   <div>
                     <h4 className="font-medium">Meeting Link</h4>
                     <p className="text-sm text-muted-foreground">
-                      You'll receive the meeting link 24 hours before the session
+                      You'll receive the meeting link after successful payment
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 bg-brand-teal rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-white text-xs font-bold">4</span>
@@ -451,14 +451,14 @@ export default function BookingConfirmation() {
                     Please join the session 5 minutes before the scheduled time
                   </p>
                 </div>
-                
+
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-muted-foreground">
                     Cancellations must be made at least 24 hours before the session
                   </p>
                 </div>
-                
+
                 <div className="flex items-start gap-2">
                   <AlertCircle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-muted-foreground">
@@ -500,16 +500,16 @@ export default function BookingConfirmation() {
 
         {/* Bottom Actions */}
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
+          <Button
             onClick={() => navigate('/my-bookings')}
             variant="outline"
             className="flex-1 sm:flex-none"
           >
             View All Bookings
           </Button>
-          
+
           {booking?.paymentStatus === 'pending' && booking?.status === 'pending' && (
-            <Button 
+            <Button
               onClick={() => setShowPaymentModal(true)}
               className="flex-1 sm:flex-none bg-orange-600 hover:bg-orange-700"
             >
@@ -517,8 +517,8 @@ export default function BookingConfirmation() {
               Pay Now to Confirm Booking
             </Button>
           )}
-          
-          <Button 
+
+          <Button
             onClick={() => navigate('/find-consultants')}
             className="flex-1 sm:flex-none"
           >
@@ -548,4 +548,4 @@ export default function BookingConfirmation() {
       />
     </div>
   );
-} 
+}

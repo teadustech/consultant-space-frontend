@@ -5,13 +5,13 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
-import { 
-  Search, 
-  Star, 
-  Clock, 
-  DollarSign, 
-  User, 
-  Filter, 
+import {
+  Search,
+  Star,
+  Clock,
+  DollarSign,
+  User,
+  Filter,
   ArrowRight,
   Shield,
   CheckCircle,
@@ -21,7 +21,7 @@ import { publicConsultantService } from "../services/publicConsultantService";
 
 const domains = [
   "Software",
-  "Finance", 
+  "Finance",
   "Law",
   "Admin",
   "Marketing",
@@ -57,11 +57,11 @@ export default function PublicConsultantSearch() {
   const searchConsultants = async (page = 1) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const searchParams = { ...filters, page, limit: 12 };
       const results = await publicConsultantService.searchConsultants(searchParams);
-      
+
       setConsultants(results.consultants);
       setPagination(results.pagination);
     } catch (error) {
@@ -99,7 +99,7 @@ export default function PublicConsultantSearch() {
   };
 
   const handleViewProfile = (consultantId) => {
-    navigate(`/consultant/${consultantId}/public`);
+    navigate(`/consultant/${consultantId}`);
   };
 
   const handlePageChange = (newPage) => {
@@ -120,14 +120,14 @@ export default function PublicConsultantSearch() {
               Discover top consultants in your field. Sign up to book consultations.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Button 
-                onClick={() => navigate('/signup/seeker')} 
+              <Button
+                onClick={() => navigate('/signup/seeker')}
                 className="bg-brand-teal hover:bg-brand-teal/90"
               >
                 Sign Up to Book
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => navigate('/login')}
               >
                 Already have an account? Login
@@ -172,7 +172,7 @@ export default function PublicConsultantSearch() {
                       onChange={(e) => handleFilterChange('query', e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="domain">Domain</Label>
                     <select
@@ -187,7 +187,7 @@ export default function PublicConsultantSearch() {
                       ))}
                     </select>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="minRating">Minimum Rating</Label>
                     <select
@@ -202,7 +202,7 @@ export default function PublicConsultantSearch() {
                       <option value="2">2+ Stars</option>
                     </select>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="maxPrice">Max Price (₹/hour)</Label>
                     <Input
@@ -213,7 +213,7 @@ export default function PublicConsultantSearch() {
                       onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="minExperience">Min Experience (years)</Label>
                     <Input
@@ -225,7 +225,7 @@ export default function PublicConsultantSearch() {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex gap-4">
                   <Button type="submit" className="bg-brand-teal hover:bg-brand-teal/90">
                     <Search className="h-4 w-4 mr-2" />
@@ -307,14 +307,14 @@ export default function PublicConsultantSearch() {
                         )}
                       </div>
                       <div className="flex gap-2 mt-4">
-                        <Button 
+                        <Button
                           onClick={() => handleSignupToBook(consultant._id)}
                           className="flex-1 bg-brand-teal hover:bg-brand-teal/90"
                         >
                           Sign Up to Book
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           onClick={() => handleViewProfile(consultant._id)}
                         >
                           View Profile
@@ -335,11 +335,11 @@ export default function PublicConsultantSearch() {
                   >
                     Previous
                   </Button>
-                  
+
                   <span className="text-sm text-muted-foreground">
                     Page {pagination.currentPage} of {pagination.totalPages}
                   </span>
-                  
+
                   <Button
                     variant="outline"
                     onClick={() => handlePageChange(pagination.currentPage + 1)}
@@ -371,4 +371,4 @@ export default function PublicConsultantSearch() {
       </div>
     </>
   );
-} 
+}

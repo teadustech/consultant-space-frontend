@@ -36,6 +36,7 @@ import ServiceBookings from "./pages/ServiceBookings";
 import SeekerServiceBookings from "./pages/SeekerServiceBookings";
 import ConsultantDirectory from "./pages/ConsultantDirectory";
 import NotFound from "./pages/NotFound";
+import { Navigate } from "react-router-dom";
 
 export const routes = [
   {
@@ -116,9 +117,13 @@ export const routes = [
   },
   {
     path: "/consultant/:id/public",
-    element: <PublicConsultantSearch />, // Will be replaced with dedicated profile page
+    element: <ConsultantProfile />,
   },
   // Admin Routes
+  {
+    path: "/admin",
+    element: <Navigate to="/admin/login" replace />,
+  },
   {
     path: "/admin/login",
     element: <AdminLogin />,

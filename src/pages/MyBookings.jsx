@@ -39,7 +39,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Edit,
-  Trash2
+  Trash2,
+  CreditCard
 } from "lucide-react";
 import { bookingService } from "../services/bookingService";
 
@@ -71,11 +72,11 @@ export default function MyBookings() {
 
     const userData = JSON.parse(storedUserData);
     setUserData(userData);
-    
+
     // Debug: Log user data
     console.log('User Data:', userData);
     console.log('User Type:', userData.userType);
-    
+
     loadBookings();
   }, [navigate, filters]);
 
@@ -85,7 +86,7 @@ export default function MyBookings() {
       const data = await bookingService.getMyBookings(filters);
       setBookings(data.bookings);
       setPagination(data.pagination);
-      
+
       // Debug: Log booking data
       console.log('Bookings loaded:', data.bookings);
       data.bookings.forEach((booking, index) => {
@@ -143,7 +144,7 @@ export default function MyBookings() {
       startTime: booking.startTime,
       canCancel: bookingService.canCancelBooking(booking)
     });
-    
+
     const reason = window.prompt('Please provide a reason for cancellation (optional):');
     if (reason !== null) { // User didn't cancel the prompt
       try {
@@ -158,7 +159,7 @@ export default function MyBookings() {
   const handleAddReview = async (booking) => {
     const rating = window.prompt('Rate your experience (1-5 stars):');
     const review = window.prompt('Write a review (optional):');
-    
+
     if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
       try {
         await bookingService.addReview(booking._id, parseInt(rating), review || '');
@@ -194,7 +195,7 @@ Booking Details:
   const formatDate = (dateString) => {
     // Handle timezone issues by creating a consistent date object
     const date = new Date(dateString);
-    
+
     // Use local date formatting to avoid timezone shifts
     return date.toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -240,8 +241,8 @@ Booking Details:
       <main className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={() => navigate(-1)}
             className="mb-4"
           >
@@ -393,8 +394,8 @@ Booking Details:
                     <TableCell>
                       <div className="flex items-center gap-2">
                         {booking.consultant.profileImage ? (
-                          <img 
-                            src={booking.consultant.profileImage} 
+                          <img
+                            src={booking.consultant.profileImage}
                             alt={booking.consultant.fullName}
                             className="w-8 h-8 rounded-full object-cover"
                           />
@@ -417,9 +418,9 @@ Booking Details:
                     </TableCell>
                     <TableCell>
                       {booking.meetingLink ? (
-                        <a 
-                          href={booking.meetingLink} 
-                          target="_blank" 
+                        <a
+                          href={booking.meetingLink}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-brand-teal hover:underline text-sm font-medium"
                         >
@@ -453,31 +454,26 @@ Booking Details:
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        
+
                         {/* Status-specific actions */}
                         {booking.status === 'pending' && userData?.userType === 'consultant' && (
-                          <div className="flex items-center gap-1">
-                            <Button
-                              variant="default"
-                              size="sm"
-                              onClick={() => handleStatusUpdate(booking._id, 'confirmed')}
-                              title="Approve Booking"
-                            >
-                              <CheckCircle className="h-4 w-4 mr-1" />
-                              Approve
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              size="sm"
-                              onClick={() => handleStatusUpdate(booking._id, 'cancelled', 'Declined by consultant')}
-                              title="Reject Booking"
-                            >
-                              <XCircle className="h-4 w-4 mr-1" />
-                              Reject
-                            </Button>
-                          </div>
+                          <Badge variant="warning" className="text-xs">
+                            Awaiting payment
+                          </Badge>
                         )}
-                        
+
+                        {booking.status === 'pending' && booking.paymentStatus === 'pending' && userData?.userType === 'seeker' && (
+                          <Button
+                            variant="default"
+                            size="sm"
+                            onClick={() => navigate(`/booking-confirmation/${booking._id}`)}
+                            title="Pay Now"
+                          >
+                            <CreditCard className="h-4 w-4 mr-1" />
+                            Pay
+                          </Button>
+                        )}
+
                         {booking.status === 'confirmed' && userData?.userType === 'consultant' && (
                           <Button
                             variant="default"
@@ -488,7 +484,7 @@ Booking Details:
                             Complete
                           </Button>
                         )}
-                        
+
                         {booking.status === 'completed' && userData?.userType === 'seeker' && !booking.rating && (
                           <Button
                             variant="outline"
@@ -499,7 +495,7 @@ Booking Details:
                             <Star className="h-4 w-4" />
                           </Button>
                         )}
-                        
+
                         {/* Show cancel button for pending and confirmed bookings */}
                         {(booking.status === 'pending' || booking.status === 'confirmed') && bookingService.canCancelBooking(booking) && (
                           <Button
@@ -511,7 +507,7 @@ Booking Details:
                             <XCircle className="h-4 w-4" />
                           </Button>
                         )}
-                        
+
                         {/* Debug info for cancel button */}
                         {console.log('Cancel button debug:', {
                           bookingId: booking._id,
@@ -520,7 +516,7 @@ Booking Details:
                           canCancel: bookingService.canCancelBooking(booking),
                           showCancel: (booking.status === 'pending' || booking.status === 'confirmed') && bookingService.canCancelBooking(booking)
                         })}
-                        
+
                         {/* Show reschedule button for pending and confirmed bookings */}
                         {(booking.status === 'pending' || booking.status === 'confirmed') && (
                           <Button
@@ -538,7 +534,7 @@ Booking Details:
                 ))}
                 {bookings.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8">
+                    <TableCell colSpan={8} className="text-center py-8">
                       <div className="flex flex-col items-center gap-2">
                         <Calendar className="h-8 w-8 text-muted-foreground" />
                         <p className="text-muted-foreground">No bookings found</p>
@@ -591,4 +587,4 @@ Booking Details:
       <Footer />
     </div>
   );
-} 
+}

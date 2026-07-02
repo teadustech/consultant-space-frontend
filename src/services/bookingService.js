@@ -1,11 +1,11 @@
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+import { apiUrl } from '../config/api';
 
 class BookingService {
   // Create a new booking
   createBooking = async (bookingData) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings`, {
+      const response = await fetch(apiUrl('/api/bookings'), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -38,7 +38,7 @@ class BookingService {
         }
       });
 
-      const response = await fetch(`${API_BASE}/bookings/my-bookings?${params}`, {
+      const response = await fetch(apiUrl(`/api/bookings/my-bookings?${params}`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ class BookingService {
   getUpcomingBookings = async (limit = 5) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings/upcoming?limit=${limit}`, {
+      const response = await fetch(apiUrl(`/api/bookings/upcoming?limit=${limit}`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ class BookingService {
   getBookingById = async (bookingId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings/${bookingId}`, {
+      const response = await fetch(apiUrl(`/api/bookings/${bookingId}`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ class BookingService {
   updateBookingStatus = async (bookingId, status, reason = '') => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings/${bookingId}/status`, {
+      const response = await fetch(apiUrl(`/api/bookings/${bookingId}/status`), {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -132,7 +132,7 @@ class BookingService {
   addReview = async (bookingId, rating, review = '') => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings/${bookingId}/review`, {
+      const response = await fetch(apiUrl(`/api/bookings/${bookingId}/review`), {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -157,7 +157,7 @@ class BookingService {
   getConsultantAvailability = async (consultantId, startDate, endDate) => {
     try {
       const response = await fetch(
-        `${API_BASE}/bookings/consultant/${consultantId}/availability?startDate=${startDate}&endDate=${endDate}`,
+        apiUrl(`/api/bookings/consultant/${consultantId}/availability?startDate=${startDate}&endDate=${endDate}`),
         {
           headers: {
             'Content-Type': 'application/json'
@@ -181,7 +181,7 @@ class BookingService {
   rescheduleBooking = async (bookingId, sessionDate, startTime) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE}/bookings/${bookingId}/reschedule`, {
+      const response = await fetch(apiUrl(`/api/bookings/${bookingId}/reschedule`), {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -226,7 +226,7 @@ class BookingService {
   formatBookingDate = (dateString) => {
     // Handle timezone issues by creating a consistent date object
     const date = new Date(dateString);
-    
+
     // Use local date formatting to avoid timezone shifts
     return date.toLocaleDateString('en-IN', {
       weekday: 'long',
@@ -279,19 +279,19 @@ class BookingService {
     }
 
     const now = new Date();
-    
+
     // Create session date time properly (same logic as backend)
     let sessionDateTime = new Date(booking.sessionDate);
-    
+
     // If the sessionDate doesn't have the time set (only date), set it from startTime
     if (sessionDateTime.getHours() === 0 && sessionDateTime.getMinutes() === 0) {
       const [hours, minutes] = booking.startTime.split(':').map(Number);
       sessionDateTime.setHours(hours, minutes, 0, 0);
     }
-    
+
     // Can cancel up to 24 hours before the session
     const cancellationDeadline = new Date(sessionDateTime.getTime() - 24 * 60 * 60 * 1000);
-    
+
     console.log('Frontend canCancelBooking check:', {
       bookingId: booking._id,
       now: now.toISOString(),
@@ -300,7 +300,7 @@ class BookingService {
       cancellationDeadline: cancellationDeadline.toISOString(),
       canCancel: now < cancellationDeadline
     });
-    
+
     return now < cancellationDeadline;
   };
 
@@ -309,10 +309,10 @@ class BookingService {
   };
 
   canAddReview = (booking, userType) => {
-    return booking.status === 'completed' && 
-           userType === 'seeker' && 
+    return booking.status === 'completed' &&
+           userType === 'seeker' &&
            !booking.rating;
   };
 }
 
-export const bookingService = new BookingService(); 
+export const bookingService = new BookingService();

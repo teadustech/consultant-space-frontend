@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { ArrowLeft, Save, DollarSign, TrendingUp, TrendingDown, Info } from "lucide-react";
-import axios from "axios";
+import { consultantService } from "../services/consultantService";
 
 export default function UpdateRates() {
   const navigate = useNavigate();
@@ -47,23 +47,40 @@ export default function UpdateRates() {
       return;
     }
 
-    try {
-      const user = JSON.parse(storedUserData);
-      setUserData(user);
-      
-      // Pre-fill form with existing data
-      setForm({
-        hourlyRate: user.hourlyRate || "",
-        consultationFee: user.consultationFee || "",
-        packageRate: user.packageRate || "",
-        emergencyRate: user.emergencyRate || ""
-      });
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-      navigate('/login');
-    } finally {
-      setLoading(false);
-    }
+    const loadRates = async () => {
+      try {
+        const user = JSON.parse(storedUserData);
+        setUserData(user);
+
+        const profile = await consultantService.getMyProfile();
+        const currentData = { ...user, ...profile };
+        setForm({
+          hourlyRate: currentData.hourlyRate || "",
+          consultationFee: currentData.consultationFee || "",
+          packageRate: currentData.packageRate || "",
+          emergencyRate: currentData.emergencyRate || ""
+        });
+      } catch (error) {
+        console.error('Error loading rates:', error);
+        try {
+          const user = JSON.parse(storedUserData);
+          setUserData(user);
+          setForm({
+            hourlyRate: user.hourlyRate || "",
+            consultationFee: user.consultationFee || "",
+            packageRate: user.packageRate || "",
+            emergencyRate: user.emergencyRate || ""
+          });
+        } catch (parseError) {
+          console.error('Error parsing user data:', parseError);
+          navigate('/login');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRates();
   }, [navigate]);
 
   const handleInputChange = (e) => {
@@ -72,7 +89,7 @@ export default function UpdateRates() {
       ...prev,
       [name]: value
     }));
-    
+
     // Clear field-specific error
     if (errors[name]) {
       setErrors(prev => ({
@@ -109,34 +126,26 @@ export default function UpdateRates() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setSaving(true);
     setSuccess("");
-    
+
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(
-        `/api/consultants/${userData._id}/rates`,
-        form,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const response = await consultantService.updateRates({
+        hourlyRate: Number(form.hourlyRate)
+      });
 
       // Update localStorage with new user data
-      const updatedUserData = { ...userData, ...form };
+      const updatedUserData = { ...userData, ...response.consultant };
       localStorage.setItem('userData', JSON.stringify(updatedUserData));
       setUserData(updatedUserData);
 
       setSuccess("Rates updated successfully!");
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setSuccess("");
@@ -145,7 +154,7 @@ export default function UpdateRates() {
     } catch (error) {
       console.error('Rate update error:', error);
       setErrors({
-        api: error.response?.data?.message || "Failed to update rates. Please try again."
+        api: error.response?.data?.message || error.response?.data?.error || error.message || "Failed to update rates. Please try again."
       });
     } finally {
       setSaving(false);
@@ -155,12 +164,12 @@ export default function UpdateRates() {
   const getRateComparison = () => {
     const currentRate = parseFloat(form.hourlyRate) || 0;
     const avgRate = marketData.averageRate;
-    
+
     if (currentRate === 0) return null;
-    
+
     const difference = currentRate - avgRate;
     const percentage = ((difference / avgRate) * 100).toFixed(1);
-    
+
     return {
       difference,
       percentage,
@@ -189,7 +198,7 @@ export default function UpdateRates() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -223,7 +232,7 @@ export default function UpdateRates() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+
           {/* Rate Settings */}
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit}>
@@ -238,7 +247,7 @@ export default function UpdateRates() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  
+
                   <div>
                     <Label htmlFor="hourlyRate">Hourly Rate (₹) *</Label>
                     <Input
@@ -425,4 +434,4 @@ export default function UpdateRates() {
       </div>
     </div>
   );
-} 
+}

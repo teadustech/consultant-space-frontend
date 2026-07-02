@@ -18,6 +18,16 @@ import {
   FiCamera,
   FiUser
 } from "react-icons/fi";
+import { consultantService } from "../services/consultantService";
+
+const normalizeServices = (services = []) => services.map((service, index) => ({
+  id: service.id || `${Date.now()}-${index}`,
+  name: service.name || "",
+  description: service.description || "",
+  price: service.price ?? "",
+  duration: service.duration || ""
+}));
+
 export default function ConsultantProfileSettings() {
   const [profileEnabled, setProfileEnabled] = useState(false);
   const [profileData, setProfileData] = useState({
@@ -44,12 +54,28 @@ export default function ConsultantProfileSettings() {
   const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
-    // Load existing profile data from localStorage or API
-    const savedData = localStorage.getItem('consultantProfileData');
-    if (savedData) {
-      setProfileData(JSON.parse(savedData));
-      setProfileEnabled(true);
-    }
+    const loadProfileSettings = async () => {
+      try {
+        const profile = await consultantService.getMyProfile();
+
+        setProfileEnabled(Boolean(profile.profileEnabled));
+        setProfileData({
+          username: profile.username || "",
+          tagline: profile.tagline || "",
+          bio: profile.bio || "",
+          qualifications: profile.qualifications || "",
+          experience: profile.experienceSummary || "",
+          expertise: Array.isArray(profile.profileExpertise) ? profile.profileExpertise : [],
+          services: normalizeServices(profile.services),
+          profilePicture: profile.profilePicture || profile.profileImage || ""
+        });
+      } catch (error) {
+        console.error('Error loading profile settings:', error);
+        setErrors({ api: "Failed to load profile settings. Please refresh and try again." });
+      }
+    };
+
+    loadProfileSettings();
   }, []);
 
   const validateProfile = () => {
@@ -57,6 +83,8 @@ export default function ConsultantProfileSettings() {
     
     if (!profileData.username || !profileData.username.trim()) {
       newErrors.username = "Username is required for your profile URL";
+    } else if (!/^[a-z0-9-]{3,40}$/.test(profileData.username.trim().toLowerCase())) {
+      newErrors.username = "Use 3-40 characters: lowercase letters, numbers, and hyphens only";
     }
     
     if (!profileData.tagline || !profileData.tagline.trim()) {
@@ -97,25 +125,31 @@ export default function ConsultantProfileSettings() {
     setErrors({});
     
     try {
-      // Add profileEnabled flag to the profile data
-      const profileDataWithEnabled = {
-        ...profileData,
+      const payload = {
+        username: profileData.username.trim().toLowerCase(),
+        tagline: profileData.tagline.trim(),
+        bio: profileData.bio.trim(),
+        qualifications: profileData.qualifications.trim(),
+        experienceSummary: profileData.experience.trim(),
+        profileExpertise: profileData.expertise.map(item => item.trim()).filter(Boolean),
+        services: profileData.services.map(service => ({
+          id: String(service.id),
+          name: service.name.trim(),
+          description: service.description.trim(),
+          price: Number(service.price),
+          duration: service.duration.trim()
+        })),
+        profilePicture: profileData.profilePicture,
         profileEnabled: true
       };
-      
-      // Save to localStorage for the current user
-      localStorage.setItem('consultantProfileData', JSON.stringify(profileDataWithEnabled));
-      
-      // Save to public profiles list for seekers to access
-      const allProfiles = JSON.parse(localStorage.getItem('allConsultantProfiles') || '{}');
-      allProfiles[profileData.username] = profileDataWithEnabled;
-      localStorage.setItem('allConsultantProfiles', JSON.stringify(allProfiles));
-      
-      // Debug logging
-      console.log('Original profile data:', profileData);
-      console.log('Profile data with enabled flag:', profileDataWithEnabled);
-      console.log('All profiles after save:', allProfiles);
-      console.log('Profile URL:', getProfileUrl());
+
+      const response = await consultantService.updateProfile(payload);
+      const currentUser = JSON.parse(localStorage.getItem('userData') || '{}');
+      localStorage.setItem('userData', JSON.stringify({
+        ...currentUser,
+        ...response.consultant
+      }));
+      setProfileEnabled(Boolean(response.consultant?.profileEnabled));
       
       setSuccess(`Profile settings saved successfully! Your profile page is now live at: ${getProfileUrl()}`);
       
@@ -126,7 +160,9 @@ export default function ConsultantProfileSettings() {
       
     } catch (error) {
       console.error('Error saving profile:', error);
-      setErrors({ api: "Failed to save profile settings. Please try again." });
+      setErrors({
+        api: error.response?.data?.message || error.response?.data?.error || error.message || "Failed to save profile settings. Please try again."
+      });
     } finally {
       setSaving(false);
     }

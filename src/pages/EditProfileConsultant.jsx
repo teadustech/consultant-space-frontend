@@ -7,11 +7,11 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Textarea } from "../components/ui/textarea";
 import { ArrowLeft, Save, User, Mail, Phone, DollarSign, Briefcase } from "lucide-react";
-import axios from "axios";
+import { consultantService } from "../services/consultantService";
 
 const domains = [
   "Software",
-  "Finance", 
+  "Finance",
   "Law",
   "Admin",
   "Marketing",
@@ -55,16 +55,10 @@ export default function EditProfileConsultant() {
       try {
         const user = JSON.parse(storedUserData);
         setUserData(user);
-        
+
         // Fetch full profile data from server
-        const response = await axios.get('/api/consultants/profile/me', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        const profileData = response.data;
-        
+        const profileData = await consultantService.getMyProfile();
+
         // Pre-fill form with existing data
         setForm({
           fullName: profileData.fullName || "",
@@ -113,7 +107,7 @@ export default function EditProfileConsultant() {
       ...prev,
       [name]: value
     }));
-    
+
     // Clear field-specific error
     if (errors[name]) {
       setErrors(prev => ({
@@ -152,6 +146,8 @@ export default function EditProfileConsultant() {
 
     if (!form.experience || !form.experience.trim()) {
       newErrors.experience = "Experience is required";
+    } else if (isNaN(form.experience) || parseFloat(form.experience) < 0) {
+      newErrors.experience = "Please enter years of experience as a number";
     }
 
     setErrors(newErrors);
@@ -160,34 +156,29 @@ export default function EditProfileConsultant() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setSaving(true);
     setSuccess("");
-    
+
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(
-        `/api/consultants/${userData.id}/profile`,
-        form,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const payload = {
+        ...form,
+        hourlyRate: Number(form.hourlyRate),
+        experience: Number(form.experience)
+      };
+      const response = await consultantService.updateProfile(payload);
 
       // Update localStorage with new user data from server response
-      const updatedUserData = { ...userData, ...response.data.consultant };
+      const updatedUserData = { ...userData, ...response.consultant };
       localStorage.setItem('userData', JSON.stringify(updatedUserData));
       setUserData(updatedUserData);
 
       setSuccess("Profile updated successfully!");
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setSuccess("");
@@ -196,7 +187,7 @@ export default function EditProfileConsultant() {
     } catch (error) {
       console.error('Profile update error:', error);
       setErrors({
-        api: error.response?.data?.message || "Failed to update profile. Please try again."
+        api: error.response?.data?.message || error.response?.data?.error || error.message || "Failed to update profile. Please try again."
       });
     } finally {
       setSaving(false);
@@ -222,7 +213,7 @@ export default function EditProfileConsultant() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -257,7 +248,7 @@ export default function EditProfileConsultant() {
 
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
+
             {/* Basic Information */}
             <Card>
               <CardHeader>
@@ -374,7 +365,7 @@ export default function EditProfileConsultant() {
                     name="experience"
                     value={form.experience}
                     onChange={handleInputChange}
-                    placeholder="e.g., 5+ years in software development"
+                    placeholder="e.g., 5"
                     className={errors.experience ? "border-red-500" : ""}
                   />
                   {errors.experience && (
@@ -468,4 +459,4 @@ export default function EditProfileConsultant() {
       </div>
     </div>
   );
-} 
+}

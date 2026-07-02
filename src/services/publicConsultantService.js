@@ -6,26 +6,26 @@ export const publicConsultantService = {
   searchConsultants: async (filters = {}) => {
     try {
       const params = new URLSearchParams();
-      
+
       // Add filters to query parameters
       Object.keys(filters).forEach(key => {
         if (filters[key] !== undefined && filters[key] !== null && filters[key] !== '') {
           params.append(key, filters[key]);
         }
       });
-      
+
       const response = await fetch(apiUrl(`/api/consultants/public/search?${params}`), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Search failed');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error in public consultant search:', error);
@@ -42,15 +42,37 @@ export const publicConsultantService = {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to fetch profile');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error fetching public profile:', error);
+      throw error;
+    }
+  },
+
+  // Get public consultant profile by profile-page username
+  getPublicProfileByUsername: async (username) => {
+    try {
+      const response = await fetch(apiUrl(`/api/consultants/public-profile/username/${encodeURIComponent(username)}`), {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch profile');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching public profile by username:', error);
       throw error;
     }
   },
@@ -64,11 +86,11 @@ export const publicConsultantService = {
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch domains');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error fetching domains:', error);
@@ -89,4 +111,4 @@ export const publicConsultantService = {
     }
     return consultantId;
   }
-}; 
+};

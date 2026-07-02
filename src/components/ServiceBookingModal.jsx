@@ -5,6 +5,9 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
+import { Separator } from "./ui/separator";
+import { bookingService } from "../services/bookingService";
+import paymentService from "../services/paymentService";
 import { 
   FiX, 
   FiDollarSign, 
@@ -33,7 +36,17 @@ export default function ServiceBookingModal({
   });
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1); // 1: Details, 2: Payment, 3: Confirmation
-  const [advanceAmount] = useState(500); // Configurable advance amount
+  const [booking, setBooking] = useState(null);
+  const [error, setError] = useState("");
+
+  const parseDurationMinutes = (duration) => {
+    if (!duration) return 60;
+    const value = String(duration).toLowerCase();
+    const number = Number(value.match(/\d+(\.\d+)?/)?.[0] || 1);
+    if (value.includes("hour")) return Math.max(15, Math.round(number * 60));
+    if (value.includes("min")) return Math.max(15, Math.round(number));
+    return 60;
+  };
 
   useEffect(() => {
     // Pre-fill form with user data if logged in
@@ -58,46 +71,88 @@ export default function ServiceBookingModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
     
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const token = localStorage.getItem('token');
+      const userType = localStorage.getItem('userType');
+
+      if (!token || userType !== 'seeker') {
+        setError("Please login as a seeker before booking a service.");
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.preferredDate || !formData.preferredTime) {
+        setError("Preferred date and time are required for payment booking.");
+        setLoading(false);
+        return;
+      }
+
+      const consultantId = consultant.id || consultant._id;
+      if (!consultantId) {
+        setError("Consultant profile is missing booking details. Please try from the consultant directory.");
+        setLoading(false);
+        return;
+      }
+
+      const result = await bookingService.createBooking({
+        consultantId,
+        sessionType: "consultation",
+        sessionDuration: parseDurationMinutes(service.duration),
+        sessionDate: formData.preferredDate,
+        startTime: formData.preferredTime,
+        meetingPlatform: "google_meet",
+        description: [
+          `Service: ${service.name}`,
+          service.description ? `Service description: ${service.description}` : "",
+          formData.message ? `Seeker message: ${formData.message}` : ""
+        ].filter(Boolean).join("\n"),
+        serviceId: service.id,
+        serviceName: service.name,
+        servicePrice: Number(service.price)
+      });
+
+      setBooking(result.booking);
       setStep(2);
-    }, 1000);
+    } catch (error) {
+      console.error('Service booking error:', error);
+      setError(error.message || "Failed to create booking. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handlePayment = async () => {
     setLoading(true);
+    setError("");
     
-    // Simulate payment processing
-    setTimeout(() => {
+    try {
+      if (!booking?._id) {
+        throw new Error("Booking is missing. Please submit the service details again.");
+      }
+
+      await paymentService.loadRazorpayScript();
+      const orderResponse = await paymentService.createPaymentOrder(booking._id);
+      const user = JSON.parse(localStorage.getItem('userData') || '{}');
+
+      paymentService.initializeRazorpayPayment(
+        orderResponse.order,
+        user,
+        () => {
+          setLoading(false);
+          setStep(3);
+        },
+        (failureResult) => {
+          setLoading(false);
+          setError(failureResult.message || "Payment failed. Please try again.");
+        }
+      );
+    } catch (error) {
+      console.error('Service payment error:', error);
+      setError(error.message || "Failed to process payment. Please try again.");
       setLoading(false);
-      setStep(3);
-      
-      // Save booking to localStorage (in real app, this would be an API call)
-      const booking = {
-        id: Date.now(),
-        serviceId: service.id,
-        serviceName: service.name,
-        consultantId: consultant.id || consultant.username,
-        consultantName: consultant.fullName,
-        seekerData: formData,
-        advanceAmount,
-        totalAmount: service.price,
-        remainingAmount: service.price - advanceAmount,
-        status: 'pending', // pending, accepted, completed, cancelled
-        createdAt: new Date().toISOString(),
-        type: 'service' // to distinguish from regular bookings
-      };
-      
-      // Save to seeker's bookings
-      const existingBookings = JSON.parse(localStorage.getItem('serviceBookings') || '[]');
-      localStorage.setItem('serviceBookings', JSON.stringify([...existingBookings, booking]));
-      
-      // Save to consultant's received bookings
-      const consultantBookings = JSON.parse(localStorage.getItem('consultantServiceBookings') || '[]');
-      localStorage.setItem('consultantServiceBookings', JSON.stringify([...consultantBookings, booking]));
-    }, 2000);
+    }
   };
 
   const handleClose = () => {
@@ -125,6 +180,12 @@ export default function ServiceBookingModal({
         </CardHeader>
 
         <CardContent>
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
+
           {/* Step 1: Service Details & Form */}
           {step === 1 && (
             <div className="space-y-6">
@@ -154,7 +215,7 @@ export default function ServiceBookingModal({
                     )}
                     <div className="flex items-center gap-1">
                       <FiDollarSign className="h-4 w-4" />
-                      Advance: ₹{advanceAmount}
+                      Pay online to confirm
                     </div>
                   </div>
                 </CardContent>
@@ -208,6 +269,7 @@ export default function ServiceBookingModal({
                       value={formData.preferredDate}
                       onChange={handleInputChange}
                       min={new Date().toISOString().split('T')[0]}
+                      required
                     />
                   </div>
                 </div>
@@ -220,6 +282,7 @@ export default function ServiceBookingModal({
                     type="time"
                     value={formData.preferredTime}
                     onChange={handleInputChange}
+                    required
                   />
                 </div>
 
@@ -238,9 +301,8 @@ export default function ServiceBookingModal({
                 <div className="bg-brand-teal/5 border border-brand-teal/20 rounded-lg p-4">
                   <h4 className="font-medium text-brand-teal mb-2">Payment Information</h4>
                   <div className="text-sm text-muted-foreground space-y-1">
-                    <p>• Advance Payment: ₹{advanceAmount} (required for booking confirmation)</p>
-                    <p>• Remaining Amount: ₹{service.price - advanceAmount} (paid directly to consultant)</p>
-                    <p>• Booking will be confirmed after consultant approval</p>
+                    <p>Full online payment is required to confirm the booking.</p>
+                    <p>Google Meet details are generated after successful payment.</p>
                   </div>
                 </div>
 
@@ -279,13 +341,13 @@ export default function ServiceBookingModal({
                     <span className="font-medium">₹{service.price}</span>
                   </div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-muted-foreground">Advance Payment:</span>
-                    <span className="font-medium text-brand-teal">₹{advanceAmount}</span>
+                    <span className="text-muted-foreground">Payment Amount:</span>
+                    <span className="font-medium text-brand-teal">₹{booking?.amount || service.price}</span>
                   </div>
                   <Separator className="my-4" />
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Remaining Amount:</span>
-                    <span className="font-medium">₹{service.price - advanceAmount}</span>
+                    <span className="text-muted-foreground">Payment Status:</span>
+                    <span className="font-medium">Pending</span>
                   </div>
                 </CardContent>
               </Card>
@@ -293,8 +355,7 @@ export default function ServiceBookingModal({
               <div className="bg-brand-teal/5 border border-brand-teal/20 rounded-lg p-4">
                 <h4 className="font-medium text-brand-teal mb-2">Payment Method</h4>
                 <p className="text-sm text-muted-foreground">
-                  For demo purposes, clicking "Pay Now" will simulate a successful payment.
-                  In production, this would integrate with a real payment gateway.
+                  Razorpay checkout will open in test mode until live Razorpay keys are configured.
                 </p>
               </div>
 
@@ -303,7 +364,7 @@ export default function ServiceBookingModal({
                 className="w-full bg-brand-teal hover:bg-brand-teal/90"
                 disabled={loading}
               >
-                {loading ? "Processing Payment..." : "Pay Now (₹" + advanceAmount + ")"}
+                {loading ? "Processing Payment..." : "Pay Now (₹" + (booking?.amount || service.price) + ")"}
               </Button>
             </div>
           )}
@@ -328,8 +389,8 @@ export default function ServiceBookingModal({
                   <ul className="text-sm text-green-700 space-y-1 text-left">
                     <li>• Consultant will review your booking request</li>
                     <li>• You'll receive confirmation email once approved</li>
-                    <li>• Pay remaining amount directly to consultant</li>
-                    <li>• Schedule your consultation session</li>
+                    <li>• Your payment has been verified</li>
+                    <li>• You can track this booking from My Bookings</li>
                   </ul>
                 </CardContent>
               </Card>

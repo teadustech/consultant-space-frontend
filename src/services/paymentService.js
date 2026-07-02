@@ -170,6 +170,16 @@ class PaymentService {
    * @param {Function} onFailure - Failure callback
    */
   initializeRazorpayPayment(order, user, onSuccess, onFailure) {
+    if (!process.env.REACT_APP_RAZORPAY_KEY_ID) {
+      onFailure({ message: 'Razorpay public key is not configured. Set REACT_APP_RAZORPAY_KEY_ID in the frontend environment.' });
+      return;
+    }
+
+    if (!this.isRazorpayLoaded()) {
+      onFailure({ message: 'Razorpay checkout did not load. Please refresh and try again.' });
+      return;
+    }
+
     const options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       amount: order.amount,
