@@ -15,6 +15,7 @@ import ConsultantProfile from "./pages/ConsultantProfile";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminConsultants from "./pages/AdminConsultants";
+import AdminConsultantDetails from "./pages/AdminConsultantDetails";
 import AdminSeekers from "./pages/AdminSeekers";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminManagement from "./pages/AdminManagement";
@@ -135,6 +136,10 @@ export const routes = [
   {
     path: "/admin/consultants",
     element: <AdminConsultants />,
+  },
+  {
+    path: "/admin/consultants/:id",
+    element: <AdminConsultantDetails />,
   },
   {
     path: "/admin/seekers",

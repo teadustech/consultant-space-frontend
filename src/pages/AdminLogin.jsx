@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
@@ -18,6 +18,14 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    const adminData = localStorage.getItem('adminData');
+    if (token && adminData) {
+      navigate('/admin/dashboard', { replace: true });
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -32,14 +40,17 @@ export default function AdminLogin() {
     setError("");
 
     try {
-      const response = await adminService.login(formData);
+      const response = await adminService.login({
+        ...formData,
+        email: formData.email.trim()
+      });
       
       // Store admin token and data
       localStorage.setItem('adminToken', response.token);
       localStorage.setItem('adminData', JSON.stringify(response.admin));
       
       // Redirect to admin dashboard
-      navigate('/admin/dashboard');
+      navigate('/admin/dashboard', { replace: true });
     } catch (error) {
       setError(error.message || 'Login failed. Please try again.');
     } finally {
@@ -126,4 +137,4 @@ export default function AdminLogin() {
       </Card>
     </div>
   );
-} 
+}

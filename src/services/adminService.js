@@ -121,6 +121,28 @@ export const adminService = {
     }
   },
 
+  getConsultant: async (consultantId) => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(`${API_BASE}/consultants/${consultantId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to fetch consultant details');
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Get consultant detail error:', error);
+      throw error;
+    }
+  },
+
   getSeekers: async (filters = {}) => {
     try {
       const token = localStorage.getItem('adminToken');
@@ -488,4 +510,4 @@ export const adminService = {
       throw error;
     }
   }
-}; 
+};
