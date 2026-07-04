@@ -16,6 +16,7 @@ import {
 } from "react-icons/fi";
 
 export default function AboutUs() {
+  const showLaunchStats = false;
   const stats = [
     { label: "Expert Consultants", value: "500+", icon: FiUsers },
     { label: "Successful Sessions", value: "10,000+", icon: FiCheckCircle },
@@ -66,17 +67,19 @@ export default function AboutUs() {
             Consultant Space is India's premier platform connecting seekers with verified experts 
             across diverse domains. We believe everyone deserves access to expert guidance.
           </p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex items-center justify-center w-16 h-16 bg-brand-teal/10 rounded-full mx-auto mb-3">
-                  <stat.icon className="h-8 w-8 text-brand-teal" />
+          {showLaunchStats && (
+            <div className="flex flex-wrap justify-center gap-8">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 bg-brand-teal/10 rounded-full mx-auto mb-3">
+                    <stat.icon className="h-8 w-8 text-brand-teal" />
+                  </div>
+                  <div className="text-3xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
-                <div className="text-3xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -238,8 +241,8 @@ export default function AboutUs() {
             Ready to Connect with Experts?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join thousands of seekers who have found the guidance they need 
-            through Consultant Space.
+            Find verified consultants and get expert guidance through 
+            Consultant Space.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

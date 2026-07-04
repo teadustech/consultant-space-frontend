@@ -19,6 +19,7 @@ export default function HeroSection() {
   const consultantCta = isLoggedIn && userType === "consultant"
     ? { to: "/dashboard", label: "Consultant Dashboard" }
     : { to: "/signup/consultant", label: "Join as Consultant" };
+  const showConsultantCta = !(isLoggedIn && userType === "seeker");
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -71,9 +72,11 @@ export default function HeroSection() {
           <Link to={seekerCta.to} className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal-dark transition">
             {seekerCta.label}
           </Link>
-          <Link to={consultantCta.to} className="bg-background border border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal/10 transition">
-            {consultantCta.label}
-          </Link>
+          {showConsultantCta && (
+            <Link to={consultantCta.to} className="bg-background border border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal/10 transition">
+              {consultantCta.label}
+            </Link>
+          )}
         </div>
       </div>
     </section>

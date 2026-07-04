@@ -48,7 +48,7 @@ export default function Contact() {
     },
     {
       title: "Office Address",
-      value: "Mumbai, Maharashtra, India",
+      value: "Kukatpally, Hyderabad, Telangana",
       description: "Visit our headquarters",
       icon: FiMapPin,
       color: "text-brand-teal",
@@ -343,8 +343,8 @@ export default function Contact() {
               Visit Our Office
             </h2>
             <p className="text-lg text-muted-foreground">
-              Located in the heart of Mumbai, our office is easily accessible 
-              and we welcome visitors during business hours.
+              Our office is located in Kukatpally, Hyderabad, and we welcome 
+              visitors during business hours.
             </p>
           </div>
           
@@ -358,9 +358,10 @@ export default function Contact() {
                   <div className="space-y-4 text-muted-foreground">
                     <p>
                       <strong className="text-foreground">Address:</strong><br />
-                      Consultant Space Tower<br />
-                      Bandra Kurla Complex<br />
-                      Mumbai, Maharashtra 400051<br />
+                      4-38-139, Deena Bandu Colony<br />
+                      Kukatpally, Tirumalagiri<br />
+                      Hyderabad - 500072<br />
+                      Telangana<br />
                       India
                     </p>
                     <p>
