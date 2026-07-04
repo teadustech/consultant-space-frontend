@@ -257,7 +257,7 @@ export default function ServiceBookingModal({
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="+91 98765 43210"
+                      placeholder="9703527689"
                     />
                   </div>
                   <div>

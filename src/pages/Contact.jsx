@@ -11,7 +11,6 @@ import {
   FiMail, 
   FiPhone, 
   FiMapPin, 
-  FiClock, 
   FiMessageSquare,
   FiSend,
   FiCheckCircle,
@@ -40,7 +39,7 @@ export default function Contact() {
     },
     {
       title: "Phone Support",
-      value: "+91 98765 43210",
+      value: "9703527689",
       description: "Speak with our support team",
       icon: FiPhone,
       color: "text-brand-red",
@@ -53,14 +52,6 @@ export default function Contact() {
       icon: FiMapPin,
       color: "text-brand-teal",
       bgColor: "bg-brand-teal/10",
-    },
-    {
-      title: "Business Hours",
-      value: "Mon - Fri: 9:00 AM - 6:00 PM",
-      description: "IST (Indian Standard Time)",
-      icon: FiClock,
-      color: "text-brand-red",
-      bgColor: "bg-brand-red/10",
     },
     {
       title: "Company",
@@ -148,7 +139,7 @@ export default function Contact() {
       {/* Contact Information */}
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {contactInfo.map((info, index) => (
               <Card key={index} className="text-center border-0 shadow-lg">
                 <CardHeader>
@@ -158,7 +149,7 @@ export default function Contact() {
                   <CardTitle className="text-lg">{info.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="font-semibold text-foreground mb-2">{info.value}</p>
+                  <p className="font-semibold text-foreground mb-2 break-words [overflow-wrap:anywhere]">{info.value}</p>
                   <p className="text-sm text-muted-foreground">{info.description}</p>
                 </CardContent>
               </Card>
@@ -335,61 +326,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Office Location */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Visit Our Office
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Our office is located in Kukatpally, Hyderabad, and we welcome 
-              visitors during business hours.
-            </p>
-          </div>
-          
-          <Card className="border-0 shadow-lg">
-            <CardContent className="p-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold text-foreground mb-4">
-                    Consultant Space Headquarters
-                  </h3>
-                  <div className="space-y-4 text-muted-foreground">
-                    <p>
-                      <strong className="text-foreground">Address:</strong><br />
-                      4-38-139, Deena Bandu Colony<br />
-                      Kukatpally, Tirumalagiri<br />
-                      Hyderabad - 500072<br />
-                      Telangana<br />
-                      India
-                    </p>
-                    <p>
-                      <strong className="text-foreground">Phone:</strong> +91 98765 43210
-                    </p>
-                    <p>
-                      <strong className="text-foreground">Email:</strong> info@theconsultant.com
-                    </p>
-                    <p>
-                      <strong className="text-foreground">Hours:</strong><br />
-                      Monday - Friday: 9:00 AM - 6:00 PM IST<br />
-                      Saturday: 10:00 AM - 2:00 PM IST<br />
-                      Sunday: Closed
-                    </p>
-                  </div>
-                </div>
-                <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <FiMapPin className="h-12 w-12 mx-auto mb-4" />
-                    <p>Interactive Map Coming Soon</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-brand-teal to-brand-red">
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
@@ -408,7 +344,7 @@ export default function Contact() {
               Email Support
             </a>
             <a
-              href="tel:+919876543210"
+              href="tel:+919703527689"
               className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-brand-teal transition-colors"
             >
               Call Us Now

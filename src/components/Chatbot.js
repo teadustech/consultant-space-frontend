@@ -118,7 +118,7 @@ const Chatbot = () => {
       ]
     },
     'contact': {
-      response: "You can reach us through:\n\n• Email: support@theconsultant.com\n• Phone: +91 98765 43210\n• Address: 4-38-139, Deena Bandu Colony, Kukatpally, Tirumalagiri, Hyderabad - 500072, Telangana\n• Live Chat: Right here! (I'm available 24/7)\n\nWe're here to help with any questions or support you need!",
+      response: "You can reach us through:\n\n• Email: support@theconsultant.com\n• Phone: 9703527689\n• Address: 4-38-139, Deena Bandu Colony, Kukatpally, Tirumalagiri, Hyderabad - 500072, Telangana\n• Live Chat: Right here! (I'm available 24/7)\n\nWe're here to help with any questions or support you need!",
       keywords: ['contact', 'support', 'help', 'email', 'phone', 'reach'],
       quickActions: [
         { text: "Learn about features", action: "features" },

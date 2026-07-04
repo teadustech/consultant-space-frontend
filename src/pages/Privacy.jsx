@@ -76,7 +76,7 @@ export default function Privacy() {
     },
     {
       title: "12. Contact Us",
-      content: `If you have any questions about this Privacy Policy or our data practices, please contact us at privacy@theconsultant.com or call us at +91 98765 43210. Teadustech Pvt Ltd is the legal entity responsible for data processing.`,
+      content: `If you have any questions about this Privacy Policy or our data practices, please contact us at support@theconsultant.com or call us at 9703527689. Teadustech Pvt Ltd is the legal entity responsible for data processing.`,
       icon: FiShield,
     },
   ];
@@ -301,13 +301,13 @@ export default function Privacy() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:privacy@theconsultant.com"
+                  href="mailto:support@theconsultant.com"
                   className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-teal/90 transition-colors"
                 >
                   Email Privacy Team
                 </a>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+919703527689"
                   className="bg-transparent border-2 border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold hover:bg-brand-teal hover:text-white transition-colors"
                 >
                   Call Us

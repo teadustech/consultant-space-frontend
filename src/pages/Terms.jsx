@@ -88,7 +88,7 @@ export default function Terms() {
     },
     {
       title: "15. Contact Information",
-      content: `If you have any questions about these Terms, please contact us at legal@theconsultant.com or call us at +91 98765 43210. Teadustech Pvt Ltd is the legal entity operating Consultant Space platform.`,
+      content: `If you have any questions about these Terms, please contact us at support@theconsultant.com or call us at 9703527689. Teadustech Pvt Ltd is the legal entity operating Consultant Space platform.`,
       icon: FiUsers,
     },
   ];
@@ -214,13 +214,13 @@ export default function Terms() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:legal@theconsultant.com"
+                  href="mailto:support@theconsultant.com"
                   className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-teal/90 transition-colors"
                 >
                   Email Legal Team
                 </a>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+919703527689"
                   className="bg-transparent border-2 border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold hover:bg-brand-teal hover:text-white transition-colors"
                 >
                   Call Us
