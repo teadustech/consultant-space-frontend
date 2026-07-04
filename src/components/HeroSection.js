@@ -8,6 +8,17 @@ import logo from "../assets/logo.png";
 export default function HeroSection() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
+  const isLoggedIn = Boolean(token && userType);
+  const seekerCta = isLoggedIn && userType === "seeker"
+    ? { to: "/consultants", label: "Find Consultants" }
+    : isLoggedIn
+      ? { to: "/dashboard", label: "Go to Dashboard" }
+      : { to: "/signup/seeker", label: "Join as Seeker" };
+  const consultantCta = isLoggedIn && userType === "consultant"
+    ? { to: "/dashboard", label: "Consultant Dashboard" }
+    : { to: "/signup/consultant", label: "Join as Consultant" };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -57,11 +68,11 @@ export default function HeroSection() {
         </form>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/signup/seeker" className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal-dark transition">
-            Join as Seeker
+          <Link to={seekerCta.to} className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal-dark transition">
+            {seekerCta.label}
           </Link>
-          <Link to="/signup/consultant" className="bg-background border border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal/10 transition">
-            Join as Consultant
+          <Link to={consultantCta.to} className="bg-background border border-brand-teal text-brand-teal px-6 py-3 rounded-lg font-semibold shadow hover:bg-brand-teal/10 transition">
+            {consultantCta.label}
           </Link>
         </div>
       </div>

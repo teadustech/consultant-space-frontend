@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputField from "../components/forms/InputField";
 import Header from "../components/Header";
 import Chatbot from "../components/Chatbot";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { consultantRegisterUrl } from "../config/api";
 import { Input } from "../components/ui/input";
@@ -22,6 +22,8 @@ const domains = [
 ];
 
 export default function SignupConsultant() {
+  const token = localStorage.getItem("token");
+  const userType = localStorage.getItem("userType");
   // Form state
   const [form, setForm] = useState({
     fullName: "",
@@ -39,6 +41,10 @@ export default function SignupConsultant() {
   const [success, setSuccess] = useState("");
   // Loading state
   const [loading, setLoading] = useState(false);
+
+  if (token && userType) {
+    return <Navigate to={userType === "consultant" ? "/dashboard" : "/consultants"} replace />;
+  }
 
   // Basic validation
   const validate = () => {
