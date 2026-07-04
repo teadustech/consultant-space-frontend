@@ -1,5 +1,6 @@
 /** Production API base (used when env is missing on live site so requests still hit backend). */
 const PRODUCTION_API_BASE = 'https://the-consultant-backend.vercel.app/api';
+const PRODUCTION_FRONTEND_HOSTS = new Set(['consultantspace.com', 'www.consultantspace.com']);
 
 /** Normalize backend URL to full API base (https + /api), no trailing slash. */
 function normalizeApiBase(value) {
@@ -28,9 +29,20 @@ export const getApiBase = () => {
   const apiUrlEnv = process.env.REACT_APP_API_URL;
   if (apiUrlEnv) out = normalizeApiBase(apiUrlEnv);
   else if (process.env.REACT_APP_BACKEND_URL) out = normalizeApiBase(process.env.REACT_APP_BACKEND_URL);
-  else if (typeof window !== 'undefined') {
-    const isLocal = /^localhost$|^127\.\d+\.\d+\.\d+$/.test(window.location.hostname);
-    if (!isLocal) out = PRODUCTION_API_BASE;
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    const isLocal = /^localhost$|^127\.\d+\.\d+\.\d+$/.test(hostname);
+    const isProductionFrontend = PRODUCTION_FRONTEND_HOSTS.has(hostname);
+    if (!out && !isLocal) out = PRODUCTION_API_BASE;
+    if (isProductionFrontend) {
+      try {
+        if (!out || new URL(out).hostname === hostname) {
+          out = PRODUCTION_API_BASE;
+        }
+      } catch {
+        out = PRODUCTION_API_BASE;
+      }
+    }
   }
   return collapseSlashes(out).replace(/\/+$/, '');
 };

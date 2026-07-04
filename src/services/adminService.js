@@ -1,6 +1,14 @@
 // Admin service for API calls
-import { getApiBase } from '../config/api';
+import { apiUrl, getApiBase } from '../config/api';
 const API_BASE = getApiBase() ? `${getApiBase().replace(/\/$/, '')}/admin` : '/api/admin';
+
+const readJsonResponse = async (response, fallbackMessage) => {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error(`${fallbackMessage}. API returned ${response.status} ${response.statusText || ''} from ${response.url}`);
+  }
+  return response.json();
+};
 
 export const adminService = {
   // Authentication
@@ -124,19 +132,19 @@ export const adminService = {
   getConsultant: async (consultantId) => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`${API_BASE}/consultants/${consultantId}`, {
+      const response = await fetch(apiUrl(`/api/admin/consultants/${consultantId}`), {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
 
+      const data = await readJsonResponse(response, 'Failed to fetch consultant details');
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Failed to fetch consultant details');
+        throw new Error(data.message || 'Failed to fetch consultant details');
       }
 
-      return await response.json();
+      return data;
     } catch (error) {
       console.error('Get consultant detail error:', error);
       throw error;
