@@ -44,7 +44,7 @@ export default function Header() {
     
     // Add "Find Consultants" only for seekers
     if (userType === 'seeker') {
-      links.splice(1, 0, { name: "Find Consultants", to: "/consultants" });
+      links.splice(1, 0, { name: "Find Consultants", to: "/public/search" });
     }
     
     return links;
@@ -207,4 +207,4 @@ export default function Header() {
       )}
     </header>
   );
-} 
+}
