@@ -1,9 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Textarea } from "../components/ui/textarea";
 import { Badge } from "../components/ui/badge";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -12,22 +8,10 @@ import {
   FiPhone, 
   FiMapPin, 
   FiMessageSquare,
-  FiSend,
-  FiCheckCircle,
-  FiAlertCircle,
   FiBriefcase
 } from "react-icons/fi";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-
   const contactInfo = [
     {
       title: "Email Support",
@@ -86,36 +70,6 @@ export default function Contact() {
     },
   ];
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    // Simulate form submission
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setSubmitStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    } catch (error) {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -158,110 +112,10 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Form & Support Categories */}
+      {/* Support Categories */}
       <section className="py-20 bg-muted/30">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-bold text-foreground mb-6">
-                Send us a Message
-              </h2>
-              <Card className="border-0 shadow-lg">
-                <CardContent className="p-6">
-                  {submitStatus === "success" && (
-                    <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                      <FiCheckCircle className="h-5 w-5 text-green-600" />
-                      <p className="text-green-800">Message sent successfully! We'll get back to you soon.</p>
-                    </div>
-                  )}
-
-                  {submitStatus === "error" && (
-                    <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                      <FiAlertCircle className="h-5 w-5 text-red-600" />
-                      <p className="text-red-800">Failed to send message. Please try again.</p>
-                    </div>
-                  )}
-
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name" className="text-foreground">Full Name *</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          type="text"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          required
-                          className="mt-2"
-                          placeholder="Enter your full name"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="email" className="text-foreground">Email Address *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          className="mt-2"
-                          placeholder="Enter your email"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="subject" className="text-foreground">Subject *</Label>
-                      <Input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        value={formData.subject}
-                        onChange={handleInputChange}
-                        required
-                        className="mt-2"
-                        placeholder="What's this about?"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="message" className="text-foreground">Message *</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        required
-                        className="mt-2 min-h-[120px]"
-                        placeholder="Tell us how we can help you..."
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-brand-teal hover:bg-brand-teal/90"
-                    >
-                      {isSubmitting ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                          Sending...
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-2">
-                          <FiSend className="h-4 w-4" />
-                          Send Message
-                        </div>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
-
+          <div className="max-w-3xl mx-auto">
             {/* Support Categories */}
             <div>
               <h2 className="text-3xl font-bold text-foreground mb-6">

@@ -16,6 +16,8 @@ import {
 
 export default function Testimonials() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const showStats = false;
+  const showFilters = false;
 
   // Add real testimonials here when available. Each item: id, name, role, company, location, rating, category ("seeker"|"consultant"), domain, date, content, image; seekers need "consultant", consultants need "earnings", "sessions".
   const testimonials = [];
@@ -66,32 +68,34 @@ export default function Testimonials() {
             who built successful practices on Consultant Space.
           </p>
           
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mb-12">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex items-center justify-center w-16 h-16 bg-brand-teal/10 rounded-full mx-auto mb-3">
-                  <stat.icon className="h-8 w-8 text-brand-teal" />
+          {showStats && (
+            <div className="flex flex-wrap justify-center gap-8 mb-12">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="flex items-center justify-center w-16 h-16 bg-brand-teal/10 rounded-full mx-auto mb-3">
+                    <stat.icon className="h-8 w-8 text-brand-teal" />
+                  </div>
+                  <div className="text-3xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
-                <div className="text-3xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {filters.map((filter) => (
-              <Button
-                key={filter.key}
-                variant={activeFilter === filter.key ? "default" : "outline"}
-                onClick={() => setActiveFilter(filter.key)}
-                className="bg-brand-teal hover:bg-brand-teal/90"
-              >
-                {filter.label}
-              </Button>
-            ))}
-          </div>
+          {showFilters && (
+            <div className="flex flex-wrap justify-center gap-4">
+              {filters.map((filter) => (
+                <Button
+                  key={filter.key}
+                  variant={activeFilter === filter.key ? "default" : "outline"}
+                  onClick={() => setActiveFilter(filter.key)}
+                  className="bg-brand-teal hover:bg-brand-teal/90"
+                >
+                  {filter.label}
+                </Button>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

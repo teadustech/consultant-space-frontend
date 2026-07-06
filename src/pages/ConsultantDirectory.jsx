@@ -18,7 +18,6 @@ export default function ConsultantDirectory() {
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDomain, setSelectedDomain] = useState("");
-  const [priceRange, setPriceRange] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
   const domains = ["Software", "Finance", "Law", "Admin", "Marketing", "HR", "Other"];
@@ -36,7 +35,7 @@ export default function ConsultantDirectory() {
 
   useEffect(() => {
     filterConsultants();
-  }, [searchQuery, selectedDomain, priceRange, consultants]);
+  }, [searchQuery, selectedDomain, consultants]);
 
   const loadConsultants = async () => {
     setLoading(true);
@@ -71,23 +70,12 @@ export default function ConsultantDirectory() {
       filtered = filtered.filter((consultant) => consultant.domain === selectedDomain);
     }
 
-    if (priceRange !== "all") {
-      filtered = filtered.filter((consultant) => {
-        const hourlyRate = consultant.hourlyRate || 0;
-        if (priceRange === "low") return hourlyRate <= 1000;
-        if (priceRange === "medium") return hourlyRate > 1000 && hourlyRate <= 3000;
-        if (priceRange === "high") return hourlyRate > 3000;
-        return true;
-      });
-    }
-
     setFilteredConsultants(filtered);
   };
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedDomain("");
-    setPriceRange("all");
   };
 
   if (loading) {
@@ -143,14 +131,14 @@ export default function ConsultantDirectory() {
               >
                 <FiFilter className="h-4 w-4" />
                 Filters
-                {showFilters && (selectedDomain || priceRange !== "all") && (
+                {showFilters && selectedDomain && (
                   <Badge variant="secondary" className="ml-1">
                     Active
                   </Badge>
                 )}
               </Button>
 
-              {(selectedDomain || priceRange !== "all") && (
+              {selectedDomain && (
                 <Button variant="ghost" onClick={clearFilters} className="flex items-center gap-2">
                   <FiX className="h-4 w-4" />
                   Clear
@@ -174,22 +162,6 @@ export default function ConsultantDirectory() {
                       {domains.map((domain) => (
                         <option key={domain} value={domain}>{domain}</option>
                       ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">
-                      Hourly Rate
-                    </label>
-                    <select
-                      value={priceRange}
-                      onChange={(e) => setPriceRange(e.target.value)}
-                      className="w-full p-2 border rounded-md border-input bg-background"
-                    >
-                      <option value="all">All Rates</option>
-                      <option value="low">Low (up to Rs.1,000/hr)</option>
-                      <option value="medium">Medium (Rs.1,001 - Rs.3,000/hr)</option>
-                      <option value="high">High (above Rs.3,000/hr)</option>
                     </select>
                   </div>
                 </div>
