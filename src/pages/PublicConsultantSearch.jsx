@@ -32,13 +32,13 @@ const domains = [
 export default function PublicConsultantSearch() {
   const navigate = useNavigate();
   const [consultants, setConsultants] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     query: "",
     domain: "",
     minRating: "",
-    maxPrice: "",
     minExperience: ""
   });
   const [pagination, setPagination] = useState({
@@ -50,6 +50,7 @@ export default function PublicConsultantSearch() {
   });
 
   useEffect(() => {
+    setIsLoggedIn(Boolean(localStorage.getItem('token') && localStorage.getItem('userType')));
     // Load initial consultants
     searchConsultants();
   }, []);
@@ -86,7 +87,6 @@ export default function PublicConsultantSearch() {
       query: "",
       domain: "",
       minRating: "",
-      maxPrice: "",
       minExperience: ""
     });
     searchConsultants(1);
@@ -116,23 +116,26 @@ export default function PublicConsultantSearch() {
             <h1 className="text-4xl font-bold text-foreground mb-4">
               Find Expert Consultants
             </h1>
-            <p className="text-xl text-muted-foreground mb-6">
-              Discover top consultants in your field. Sign up to book consultations.
+            <p className={`text-xl text-muted-foreground ${isLoggedIn ? "" : "mb-6"}`}>
+              Discover top consultants in your field.
+              {!isLoggedIn && " Sign up to book consultations."}
             </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Button
-                onClick={() => navigate('/signup/seeker')}
-                className="bg-brand-teal hover:bg-brand-teal/90"
-              >
-                Sign Up to Book
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => navigate('/login')}
-              >
-                Already have an account? Login
-              </Button>
-            </div>
+            {!isLoggedIn && (
+              <div className="flex gap-4 justify-center flex-wrap">
+                <Button
+                  onClick={() => navigate('/signup/seeker')}
+                  className="bg-brand-teal hover:bg-brand-teal/90"
+                >
+                  Sign Up to Book
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => navigate('/login')}
+                >
+                  Already have an account? Login
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Security Notice */}
@@ -156,7 +159,7 @@ export default function PublicConsultantSearch() {
                 Search Consultants
               </CardTitle>
               <CardDescription>
-                Browse our expert consultants by domain, rating, and price
+                Browse our expert consultants by domain, rating, and experience
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -202,18 +205,6 @@ export default function PublicConsultantSearch() {
                       <option value="2">2+ Stars</option>
                     </select>
                   </div>
-
-                  <div>
-                    <Label htmlFor="maxPrice">Max Price (₹/hour)</Label>
-                    <Input
-                      id="maxPrice"
-                      type="number"
-                      placeholder="e.g., 2000"
-                      value={filters.maxPrice}
-                      onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                    />
-                  </div>
-
                   <div>
                     <Label htmlFor="minExperience">Min Experience (years)</Label>
                     <Input

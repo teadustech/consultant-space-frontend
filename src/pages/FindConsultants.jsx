@@ -27,7 +27,6 @@ export default function FindConsultants() {
     query: "",
     domain: "",
     minRating: "",
-    maxPrice: "",
     minExperience: ""
   });
 
@@ -75,7 +74,6 @@ export default function FindConsultants() {
       query: "",
       domain: "",
       minRating: "",
-      maxPrice: "",
       minExperience: ""
     });
   };
@@ -146,7 +144,7 @@ export default function FindConsultants() {
                 </div>
 
                 {/* Filters */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div>
                     <Label htmlFor="domain">Domain</Label>
                     <select
@@ -178,20 +176,6 @@ export default function FindConsultants() {
                       <option value="2">2+ Stars</option>
                     </select>
                   </div>
-
-                  <div>
-                    <Label htmlFor="maxPrice">Max Price (₹/hr)</Label>
-                    <Input
-                      id="maxPrice"
-                      name="maxPrice"
-                      type="number"
-                      value={filters.maxPrice}
-                      onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                      placeholder="Max hourly rate"
-                      min="0"
-                    />
-                  </div>
-
                   <div>
                     <Label htmlFor="minExperience">Min Experience</Label>
                     <Input
@@ -325,4 +309,4 @@ export default function FindConsultants() {
       </div>
     </>
   );
-} 
+}
