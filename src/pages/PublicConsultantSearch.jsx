@@ -98,6 +98,10 @@ export default function PublicConsultantSearch() {
     navigate('/signup/seeker');
   };
 
+  const handleBookCall = (consultantId) => {
+    navigate(`/book/${consultantId}`);
+  };
+
   const handleViewProfile = (consultantId) => {
     navigate(`/consultant/${consultantId}`);
   };
@@ -299,10 +303,10 @@ export default function PublicConsultantSearch() {
                       </div>
                       <div className="flex gap-2 mt-4">
                         <Button
-                          onClick={() => handleSignupToBook(consultant._id)}
+                          onClick={() => isLoggedIn ? handleBookCall(consultant._id) : handleSignupToBook(consultant._id)}
                           className="flex-1 bg-brand-teal hover:bg-brand-teal/90"
                         >
-                          Sign Up to Book
+                          {isLoggedIn ? "Book a Call" : "Sign Up to Book"}
                         </Button>
                         <Button
                           variant="outline"
