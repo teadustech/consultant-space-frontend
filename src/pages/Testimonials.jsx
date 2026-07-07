@@ -103,11 +103,6 @@ export default function Testimonials() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-8">
-            {filteredTestimonials.length === 0 ? (
-              <p className="col-span-2 text-center text-muted-foreground py-12">
-                Real testimonials will appear here. Add entries to the testimonials array when available.
-              </p>
-            ) : null}
             {filteredTestimonials.map((testimonial) => (
               <Card key={testimonial.id} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader>
