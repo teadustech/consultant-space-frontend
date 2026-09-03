@@ -38,7 +38,7 @@ export default function Terms() {
     },
     {
       title: "5. Booking and Payment Terms",
-      content: `All bookings are subject to consultant availability. Payment is processed securely through our platform. Cancellation policies vary by consultant and are clearly stated during the booking process.`,
+      content: `All paid bookings are live, one-to-one consultations and are subject to consultant availability. Payment is processed securely through our platform. Cancellation policies vary by consultant and are clearly stated during the booking process.`,
       icon: FiDollarSign,
     },
     {
@@ -88,7 +88,7 @@ export default function Terms() {
     },
     {
       title: "15. Contact Information",
-      content: `If you have any questions about these Terms, please contact us at support@theconsultant.com or call us at 9703527689. Teadustech Pvt Ltd is the legal entity operating Consultant Space platform.`,
+      content: `If you have any questions about these Terms, please contact us at support@consultantspace.com or call us at 9703527689. Teadustech Pvt Ltd is the legal entity operating Consultant Space platform.`,
       icon: FiUsers,
     },
   ];
@@ -214,7 +214,7 @@ export default function Terms() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:support@theconsultant.com"
+                  href="mailto:support@consultantspace.com"
                   className="bg-brand-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-brand-teal/90 transition-colors"
                 >
                   Email Legal Team

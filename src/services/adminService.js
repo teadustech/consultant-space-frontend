@@ -88,11 +88,12 @@ export const adminService = {
         }
       });
 
+      const data = await readJsonResponse(response, 'Failed to fetch dashboard data');
       if (!response.ok) {
-        throw new Error('Failed to fetch dashboard data');
+        throw new Error(data.message || 'Failed to fetch dashboard data');
       }
 
-      return await response.json();
+      return data;
     } catch (error) {
       console.error('Get dashboard overview error:', error);
       throw error;
