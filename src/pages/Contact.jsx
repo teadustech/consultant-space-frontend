@@ -15,7 +15,7 @@ export default function Contact() {
   const contactInfo = [
     {
       title: "Email Support",
-      value: "support@theconsultant.com",
+      value: "support@consultantspace.com",
       description: "Get help with your account and bookings",
       icon: FiMail,
       color: "text-brand-teal",
@@ -192,7 +192,7 @@ export default function Contact() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:support@theconsultant.com"
+              href="mailto:support@consultantspace.com"
               className="bg-white text-brand-teal px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               Email Support
